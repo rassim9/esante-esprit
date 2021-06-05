@@ -1,0 +1,35 @@
+<!-- Sidenav -->
+<app-sidebar></app-sidebar>
+<div class="main-content">
+  <!-- Top navbar -->
+  <app-navbar></app-navbar>
+  <!-- Pages -->
+  
+
+<div class="header bg-gradient-danger pb-4 pt-5 pt-md-8">
+  <div class="container-fluid">
+    <div class="header-body">
+      <!-- Card stats -->
+    
+    </div>
+  </div>
+</div>
+<br><br><br><br>
+<div class="col-md-6">
+  <button nbButton outline status="success" [routerLink]="['/addevent']" class="btn btn-info">Ajouter RDV</button>
+</div>
+<hr>
+
+<div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <full-calendar [options]="calendarOptions"></full-calendar>
+      </div>
+    </div>
+  </div>
+  <!--Modal PopUp with Add Event Form-->
+ 
+<div class="container-fluid">
+  <app-footer></app-footer>
+</div>
+</div>

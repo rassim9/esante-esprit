@@ -1,0 +1,26 @@
+
+<div class="card-header border-0">
+    <h3 class="mb-0">my form</h3>
+  </div>
+  <form #formDirective [formGroup]="form" (ngSubmit)="onSubmit(form.value)" novalidate>
+              <div class="pl-lg-4">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-address">Forme</label>
+                      <input  class="form-control form-control-alternative" placeholder="comment ca va ?" type="text" formControlName="forme" >
+                    </div>
+                  </div>
+                </div>
+                </div>
+              <!-- Description -->
+            
+              <div class="pl-lg-4">
+                <div class="form-group">
+                  <label>About Me</label>
+                  <textarea rows="4" class="form-control form-control-alternative" placeholder="A few words about you ..." formControlName="desc"></textarea>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-info" style="margin-left:90%;"  [disabled]="!form.valid">Envoyer</button>
+            </form>
+  

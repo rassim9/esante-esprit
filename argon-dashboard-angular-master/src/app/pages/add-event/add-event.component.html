@@ -1,0 +1,55 @@
+<!-- Sidenav -->
+<app-sidebar></app-sidebar>
+<div class="main-content">
+  <!-- Top navbar -->
+  <app-navbar></app-navbar>
+  <!-- Pages -->
+  
+
+<div class="header bg-gradient-danger pb-4 pt-5 pt-md-8">
+  <div class="container-fluid">
+    <div class="header-body">
+      <!-- Card stats -->
+     
+
+
+    </div>
+  </div>
+</div>
+<!-- Page content -->
+
+
+<div class="card-header border-0">
+    <h3 class="mb-0">Ajouter Rendez-Vous</h3>
+  </div>
+  <form #formDirective [formGroup]="form" (ngSubmit)="onSubmit(form.value)" novalidate>
+  <div class="row">
+    <div class="col-lg-3">
+      <div class="form-group">
+        <label class="form-control-label" for="input-city">Titre</label>
+        <input type="text" id="input-city" class="form-control form-control-alternative" placeholder="Titre"  formControlName="title">
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="form-group">
+        <label class="form-control-label" for="input-country">Date</label>
+        <input type="date" id="input-country" class="form-control form-control-alternative" placeholder="Date" formControlName="date" >
+      </div>
+    </div>
+    
+    <div class="col-lg-3">
+      <div class="form-group">
+        <label class="form-control-label" for="input-country">X2</label>
+        <input type="number" id="input-postal-code" class="form-control form-control-alternative" placeholder="Patient/Medecin"  formControlName="p2">
+      </div>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-info" style="margin-left:90%;"  [disabled]="!form.valid">Envoyer</button>
+            </form>
+
+  
+  
+    <div class="container-fluid">
+        <app-footer></app-footer>
+      </div>
+    </div>

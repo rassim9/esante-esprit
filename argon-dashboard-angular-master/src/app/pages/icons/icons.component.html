@@ -1,0 +1,118 @@
+
+<!-- Sidenav -->
+<app-sidebar></app-sidebar>
+<div class="main-content">
+  <!-- Top navbar -->
+  <app-navbar></app-navbar>
+  <!-- Pages -->
+  
+
+<div class="header bg-gradient-danger pb-4 pt-5 pt-md-8">
+  <div class="container-fluid">
+    <div class="header-body">
+      <!-- Card stats -->
+     
+
+
+    </div>
+  </div>
+</div>
+<!-- Page content -->
+
+<div class="card-header border-0">
+  <h3 class="mb-0">Ajouter Patient</h3>
+</div>
+<form #formDirective [formGroup]="form" (ngSubmit)="onSubmit(form.value)" novalidate>
+<div class="row">
+  <div class="col-lg-4">
+    <div class="form-group">
+      <label class="form-control-label" for="input-city">EMAIL</label>
+      <input type="text" id="input-city" class="form-control form-control-alternative" placeholder="EMAIL"  formControlName="email">
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="form-group">
+      <label class="form-control-label" for="input-country">Patient ID</label>
+      <input type="text" id="input-country" class="form-control form-control-alternative" placeholder="Patient ID" formControlName="patientid" >
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="form-group">
+      <label class="form-control-label" for="input-country">Secret ID</label>
+      <input type="number" id="input-postal-code" class="form-control form-control-alternative" placeholder="Secret ID"  formControlName="secret">
+    </div>
+  </div>
+</div>
+<button type="submit" class="btn btn-info" style="margin-left:90%;"  [disabled]="!form.valid">Envoyer</button>
+          </form>
+
+
+<br>
+
+
+<div class="row mt-5">
+  <div class="col">
+    <div class="card bg-default shadow">
+      <div class="card-header bg-transparent border-0">
+        <h3 class="text-white mb-0">Patients</h3>
+      </div>
+      <div class="table-responsive">
+        <table class="table align-items-center table-dark table-flush">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Num</th>
+              <th scope="col">email</th>
+              <th scope="col">ID</th>
+              <th scope="col">SECRET</th>
+              
+              <th scope="col">action</th> 
+              <th scope="col">action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let patient of Patients$ | async">
+              
+              <td>
+                {{ patient.id}}
+              </td>
+              <td>
+              {{ patient.email }}
+              </td>
+              <td>
+               
+                {{ patient.patientid }}
+                </td>
+                <td>
+                  {{ patient.secret }}
+                  </td>
+                  <td>
+                  
+                    <a href="https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffitness.body.read%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffitness.activity.read%20%20profile%20email%20openid&state=%7B%7D&response_type=code&client_id={{patient.patientid}}&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fsteps"> <button onclick="postid(patient.id)">View</button></a>
+
+                   <!--<a href="https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffitness.body.read%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffitness.activity.read%20%20profile%20email%20openid&state=%7B%7D&response_type=code&client_id=422378604665-gvfnd9e6gm73nci5gpmpr0iih8ksut3n.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fsteps">View</a> --> 
+                    </td>
+             
+              <td class="text-right">
+                <div ngbDropdown placement="bottom-right">
+                  <a class="btn btn-sm btn-icon-only text-light"  ngbDropdownToggle>
+                    <i class="fas fa-ellipsis-v"></i>
+                  </a>
+                  <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
+                   
+                    <a class="dropdown-item" (click)="delete(patient.id)" >Supprimer</a>
+              
+                  </div>
+                </div>
+              </td>
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid">
+    <app-footer></app-footer>
+  </div>
+</div>
