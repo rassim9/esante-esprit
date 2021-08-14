@@ -5,6 +5,9 @@ export interface User {
     password:string;
     taille: string;
     poids: string;
-    date:Date;
+    age:number;
     role:string;
+    tel:string;
+    sexe:string;
+    adresse:string;
 }

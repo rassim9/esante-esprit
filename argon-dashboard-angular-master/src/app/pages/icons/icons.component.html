@@ -11,61 +11,242 @@
   <div class="container-fluid">
     <div class="header-body">
       <!-- Card stats -->
-     
+      <div class="row">
+        <div class="col-xl-3 col-lg-6">
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col" *ngFor="let num of num$ | async">
+                  <h5 class="card-title text-uppercase text-muted mb-0">Nombre des patients</h5>
+                  <span class="h2 font-weight-bold mb-0">{{ num.Count }}</span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                    <i class="fas fa-chart-bar"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="mt-3 mb-0 text-muted text-sm">
+                <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
+                <span class="text-nowrap">Since last month</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col" *ngFor="let num of nump$ | async">
+                  <h5 class="card-title text-uppercase text-muted mb-0">Mes patients</h5>
+                  <span class="h2 font-weight-bold mb-0">{{ num.Count }}</span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
+                    <i class="fas fa-chart-pie"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="mt-3 mb-0 text-muted text-sm">
+                <span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 3.48%</span>
+                <span class="text-nowrap">Since last week</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">Sales</h5>
+                  <span class="h2 font-weight-bold mb-0">924</span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
+                    <i class="fas fa-users"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="mt-3 mb-0 text-muted text-sm">
+                <span class="text-warning mr-2"><i class="fas fa-arrow-down"></i> 1.10%</span>
+                <span class="text-nowrap">Since yesterday</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">Performance</h5>
+                  <span class="h2 font-weight-bold mb-0">49,65%</span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-info text-white rounded-circle shadow">
+                    <i class="fas fa-percent"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="mt-3 mb-0 text-muted text-sm">
+                <span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 12%</span>
+                <span class="text-nowrap">Since last month</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
 
 
     </div>
   </div>
 </div>
+
+
+
+
 <!-- Page content -->
 
-<div class="card-header border-0">
-  <h3 class="mb-0">Ajouter Patient</h3>
-</div>
-<form #formDirective [formGroup]="form" (ngSubmit)="onSubmit(form.value)" novalidate>
+
+
+
+<div style="opacity: 1; background-repeat: no-repeat;background-size: cover;" [ngStyle]="{backgroundImage:'url(./assets/img/med.jpg)'}" >
+<br><br><br>
+
 <div class="row">
-  <div class="col-lg-4">
-    <div class="form-group">
-      <label class="form-control-label" for="input-city">EMAIL</label>
-      <input type="text" id="input-city" class="form-control form-control-alternative" placeholder="EMAIL"  formControlName="email">
-    </div>
-  </div>
-  <div class="col-lg-4">
-    <div class="form-group">
-      <label class="form-control-label" for="input-country">Patient ID</label>
-      <input type="text" id="input-country" class="form-control form-control-alternative" placeholder="Patient ID" formControlName="patientid" >
-    </div>
-  </div>
-  <div class="col-lg-4">
-    <div class="form-group">
-      <label class="form-control-label" for="input-country">Secret ID</label>
-      <input type="number" id="input-postal-code" class="form-control form-control-alternative" placeholder="Secret ID"  formControlName="secret">
-    </div>
-  </div>
-</div>
-<button type="submit" class="btn btn-info" style="margin-left:90%;"  [disabled]="!form.valid">Envoyer</button>
-          </form>
-
-
-<br>
-
-
-<div class="row mt-5">
   <div class="col">
-    <div class="card bg-default shadow">
-      <div class="card-header bg-transparent border-0">
-        <h3 class="text-white mb-0">Patients</h3>
+    <div class="card shadow">
+      <div class="card-header border-0">
+        <h3 class="mb-0">Liste des Patients</h3>
       </div>
+      <div class="col text-right">
+        <div class="container">
+          
+            <!-- Button to Open the Modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="margin-left: 85%;">
+              Ajouter Patient
+            </button>
+          
+            <!-- The Modal -->
+            <div class="modal" id="myModal">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                
+                  <!-- Modal Header -->
+                  <div class="modal-header">
+                    <h4 class="modal-title">Patient Details</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+                  
+                  <!-- Modal body -->
+                  <div class="modal-body">
+                    <form #formDirective [formGroup]="form" (ngSubmit)="onSubmit(form.value)" novalidate>
+                      <div class="row">
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-city">EMAIL</label>
+                            <input type="text"  class="form-control form-control-alternative" placeholder="EMAIL"  formControlName="email">
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-country">Patient ID</label>
+                            <input type="text"  class="form-control form-control-alternative" placeholder="Patient ID" formControlName="patientid" >
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-country">Secret ID</label>
+                            <input type="text"  class="form-control form-control-alternative" placeholder="Secret ID"  formControlName="secret">
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-country">Nom</label>
+                            <input type="text"  class="form-control form-control-alternative" placeholder="Nom"  formControlName="nom">
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-country">Prénom</label>
+                            <input type="text"  class="form-control form-control-alternative" placeholder="Prénom"  formControlName="prenom">
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-country">Sexe</label>
+                            <select  formControlName="sexe" class="form-control"  style="min-width: 100px;"> 
+                              <option value="">--Sexe--</option>
+                              <option value="Masculin">M</option>
+                              <option value="Feminin">F</option>
+                              </select>                </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-country">Age</label>
+                            <input type="number"  class="form-control form-control-alternative" placeholder="Age"  formControlName="age">
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-country">Poids</label>
+                            <input type="text"  class="form-control form-control-alternative" placeholder="Poids"  formControlName="poids">
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-country">Taille</label>
+                            <input type="text"  class="form-control form-control-alternative" placeholder="Taille"  formControlName="taille">
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-country">Periode</label>
+                            <input type="text"  class="form-control form-control-alternative" placeholder="periode"  formControlName="periode">
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-country">etat</label>
+                            <input type="text" class="form-control form-control-alternative" placeholder="etat"  formControlName="etat">
+                          </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-country">date d'intervention</label>
+                            <input type="date" class="form-control form-control-alternative" placeholder="date"  formControlName="dateint">
+                          </div>
+                        </div>
+                      </div>
+                      <button type="submit" class="btn btn-info" style="margin-left:10%;"  [disabled]="!form.valid">Envoyer</button>
+                                </form>
+                  </div>
+                  
+                  <!-- Modal footer -->
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                  </div>
+                  
+                </div>
+              </div>
+            </div>
+            
+          </div>
+      </div>
+      <br>
       <div class="table-responsive">
-        <table class="table align-items-center table-dark table-flush">
-          <thead class="thead-dark">
+        <table class="table align-items-center table-flush">
+          <thead class="thead-light">
             <tr>
               <th scope="col">Num</th>
               <th scope="col">email</th>
-              <th scope="col">ID</th>
-              <th scope="col">SECRET</th>
               
-              <th scope="col">action</th> 
+              <th scope="col">Periode</th>
+              <th scope="col">Etat</th>
+              <th scope="col">Date intervention</th>
+              
+              <th scope="col">Details</th> 
               <th scope="col">action</th>
             </tr>
           </thead>
@@ -78,16 +259,20 @@
               <td>
               {{ patient.email }}
               </td>
-              <td>
-               
-                {{ patient.patientid }}
-                </td>
-                <td>
-                  {{ patient.secret }}
-                  </td>
+              
+                  <td>
+                    {{ patient.periode }}
+                    </td>
+                    <td>
+                      {{ patient.etat }}
+                      </td>
+                      <td>
+                        {{ patient.dateint }}
+                        </td>
                   <td>
                   
-                    <a href="https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffitness.body.read%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffitness.activity.read%20%20profile%20email%20openid&state=%7B%7D&response_type=code&client_id={{patient.patientid}}&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fsteps"> <button onclick="postid(patient.id)">View</button></a>
+                     <!-- -->
+                     <a href="https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffitness.body.read%20%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffitness.activity.read%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffitness.heart_rate.read%20%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.me%20profile%20email%20openid&state=%7B%7D&response_type=code&client_id={{patient.patientid}}&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fsteps"><button (click)="postid(patient.id,patient.email)"><i class="fas fa-file-alt" style="font-size:25px"></i></button></a>
 
                    <!--<a href="https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffitness.body.read%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffitness.activity.read%20%20profile%20email%20openid&state=%7B%7D&response_type=code&client_id=422378604665-gvfnd9e6gm73nci5gpmpr0iih8ksut3n.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fsteps">View</a> --> 
                     </td>
@@ -111,6 +296,8 @@
       </div>
     </div>
   </div>
+</div>
+<br><br><br><br><br><br><br><br><br><br><br>
 </div>
 <div class="container-fluid">
     <app-footer></app-footer>

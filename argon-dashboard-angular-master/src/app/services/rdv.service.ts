@@ -32,6 +32,15 @@ export class RdvService {
     catchError(this.errorHandlerService.handleError<Rdv[]>("fetchAll", []))
     );
   }
+  fetchAllp():Observable<Rdv[]> {
+    const id =localStorage.getItem('id patient');
+    const url = `http://localhost:3000/rdv/rdv/${id}`
+    return this.http
+    .get<Rdv[]>(url, { responseType: "json" })
+    .pipe(tap((_) => console.log("fetched Rdvs")),
+    catchError(this.errorHandlerService.handleError<Rdv[]>("fetchAll", []))
+    );
+  }
 
   createRdv(formData: Partial<Rdv>): Observable<Rdv>{
     return this.http

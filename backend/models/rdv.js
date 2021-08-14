@@ -13,6 +13,10 @@ module.exports = class Rdv {
     return db.execute('SELECT title,date FROM rdv WHERE p1 = ?', [id]);
   }
 
+  static fetchAllpatient(id) {
+    return db.execute('SELECT title,date FROM rdv WHERE p2 = ?', [id]);
+  }
+
   static save(rdv) {
     return db.execute(
       'INSERT INTO rdv (title, date, p1, p2) VALUES (?, ?, ?, ?)',

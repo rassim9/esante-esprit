@@ -1,0 +1,77 @@
+
+<!-- Sidenav -->
+<app-sidebar></app-sidebar>
+<div class="main-content">
+  <!-- Top navbar -->
+  <app-navbar></app-navbar>
+  <!-- Pages -->
+  
+
+<div class="header bg-gradient-danger pb-4 pt-5 pt-md-8">
+  <div class="container-fluid">
+    <div class="header-body">
+      <!-- Card stats -->
+     
+
+
+    </div>
+  </div>
+</div>
+
+
+<br>
+<div class="card-header border-0">
+    <h3 class="mb-0">Envoyer email</h3>
+  </div>
+  <form #formDirective [formGroup]="form" (ngSubmit)="onSubmit(form.value)" novalidate>
+             
+  
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                  
+                    <label class="form-control-label" for="input-address">destinataire</label><br>
+                
+                    <select formControlName="dest"  style="min-width: 200px;">
+                      <option value="">--Pour--</option>
+                      <option *ngFor="let user of users$ | async" [ngValue]="user.email" > {{ user.name }}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              </div>
+              <div class="pl-lg-4">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-address">Object </label>
+                      <input  class="form-control form-control-alternative" placeholder="Sujet" type="text" formControlName="object" >
+                    </div>
+                  </div>
+                </div>
+                </div>
+          
+            
+              <!-- Description -->
+            
+              <div class="pl-lg-4">
+                <div class="form-group">
+                  <label>message</label>
+                  <textarea rows="4" class="form-control form-control-alternative" placeholder="Message ..." formControlName="message"></textarea>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-info" style="margin-left:90%;"  [disabled]="!form.valid">Envoyer</button>
+            </form>
+            
+
+
+
+
+
+
+
+<div class="container-fluid">
+    <app-footer></app-footer>
+  </div>
+</div>

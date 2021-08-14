@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser =require('body-parser');
+
 const db = require('./util/database');
 const pesageRoutes=require('./routes/pesage');
 const poidsRoutes=require('./routes/poids');
@@ -8,10 +9,16 @@ const pasRoutes=require('./routes/pas');
 const patientRoutes=require('./routes/patient');
 const userRoutes=require('./routes/user');
 const rdvRoutes=require('./routes/rdv');
+const msgRoutes=require('./routes/message');
 
 const errorController =require ('./controllers/error') ;
 const authRoutes=require('./routes/auth');
 const etatsRoutes=require('./routes/etats'); 
+const activeminRoutes=require('./routes/activemin');
+const heartminRoutes=require('./routes/heartmin');
+const heartbpmRoutes=require('./routes/heartbpm');
+const caloriesRoutes=require('./routes/calories');
+const medicamentRoutes=require('./routes/medicament');
 
 const { google } = require("googleapis");
 const request =require("request");
@@ -26,6 +33,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
+var cache = require('memory-cache');
 
 
 
@@ -46,8 +54,8 @@ app.get("/getURLTing", (req, res) =>{
 
 )
 //const scopes = ["https://www.googleapis.com/auth/fitness.activity.read profile email openid"];
-const scopes = ["https://www.googleapis.com/auth/fitness.body.read https://www.googleapis.com/auth/fitness.activity.read https://www.googleapis.com/auth/plus.me profile email openid"];
-//https://www.googleapis.com/auth/fitness.activity.read
+const scopes = ["https://www.googleapis.com/auth/fitness.body.read  https://www.googleapis.com/auth/fitness.activity.read https://www.googleapis.com/auth/fitness.heart_rate.read  https://www.googleapis.com/auth/plus.me profile email openid"];
+
 const url = oauth2Client.generateAuthUrl({
   access_type: "offline",
   scope: scopes,
@@ -64,25 +72,36 @@ request(url, (err,response, body) => {
 
 
 });
+
 });
 
 app.get("/steps", async(req, res) =>  {
   const queryURL = new urlParse(req.url);
   const code = queryParse.parse(queryURL.query).code;
-  //const id= req.query.id;
-  //const secret = req.query.secret;
-  console.log(code);
+  const id=cache.get('id');
+  const secret=cache.get('secret');
+const redirect="http://localhost:3000/steps";
+  //console.log(code);
+  var d1=Date.now();
+  console.log(d1);
+  var d = new Date();
+d.setUTCHours(0,0,0,0);
+console.log(+d);
+var tt=d1-d;
+console.log(tt);
+var w=d1-(tt+(86400000*6));
+console.log(w);
  
 
   const oauth2Client = new google.auth.OAuth2(
     //clientid
-"422378604665-gvfnd9e6gm73nci5gpmpr0iih8ksut3n.apps.googleusercontent.com",
+id,
 //id,
 //client secret
-"N01M8x5054F0uv91u93ekCge" ,
+secret,
 //secret,
 //link to redirect to 
-"http://localhost:3000/steps"
+redirect
 
 );
 
@@ -103,36 +122,42 @@ try {
     data: {
       aggregateBy:[
         {
-       // dataTypeName: "com.google.step_count.delta",
         dataTypeName: "com.google.weight.summary",
-     // dataSourceId: "derived:com.google.step_count.delta:com.google.android.gms:estimated_steps",
         dataSourceId: "derived:com.google.weight:com.google.android.gms:merge_weight",
-
+      },
         
-        },
-        
-        {  dataTypeName: "com.google.step_count.delta",
-          //dataTypeName: "com.google.weight.summary",
-         dataSourceId: "derived:com.google.step_count.delta:com.google.android.gms:estimated_steps",
-          //dataSourceId: "derived:com.google.weight:com.google.android.gms:merge_weight",
+        {  
+         dataTypeName: "com.google.step_count.delta",
+        dataSourceId: "derived:com.google.step_count.delta:com.google.android.gms:estimated_steps",
   
+          },
+          {  dataTypeName: "com.google.calories.expended",
+         
+          },
+          
+         {  dataTypeName: "com.google.heart_minutes",
+         dataSourceId: "derived:com.google.heart_minutes:com.google.android.gms:merge_heart_minutes",
+        
+          },
+          {  dataTypeName: "com.google.heart_rate.bpm",
           
           },
-         // {  dataTypeName: "com.google.height.summary",
-          //dataTypeName: "com.google.weight.summary",
-         //dataSourceId: "derived:com.google.height:com.google.android.gms:merge_height",
-          //dataSourceId: "derived:com.google.weight:com.google.android.gms:merge_weight",
-  
+          { dataTypeName: "com.google.active_minutes",
+         
+         },
+         // { dataTypeName: "com.google.sleep.segment",
+         
+         // },
           
-          //},
           
       ],
+
       bucketByTime: { durationMillis: 86400000},
-      startTimeMillis: 1621465200000,
-      endTimeMillis: 1621551600000,
+      startTimeMillis: w,
+      endTimeMillis: d1,
     },
   });
-  //console.log(result);
+ // console.log(result);
  // res.send("steps.value");
 
   stepArray = result.data.bucket;
@@ -140,34 +165,110 @@ try {
   console.log(e);
 }
 try{
-for (const dataSet of stepArray){
- // console.log(dataSet);
- //console.log(stepArray.length);
+ 
+for (const dataSet of stepArray){ 
+  //console.log(dataSet.dataset['dataSourceId']);
+  //if (dataSet.dataset.dataSourceId==='derived:com.google.weight.summary:com.google.android.gms:aggregated'){
+  //console.log(dataSet);
   for (const points of dataSet.dataset){
-     //console.log(points);
+   
      for (const steps of points.point){
-       
-       //console.log(steps.value);
-      for (s of steps.value){
-        
-        if (s.fpVal){console.log(s.fpVal);
+        // console.log(steps);
+       if(steps.dataTypeName==='com.google.step_count.delta'){
+       console.log(steps.dataTypeName)
+      
+             for (s of steps.value){
+              
+          console.log(s.intVal);
+        db.execute('INSERT INTO pas (valeur) VALUES (?)',[s.intVal] );
+      }
+    }
+    else if(steps.dataTypeName==='com.google.weight.summary'){
+      console.log(steps.dataTypeName)
+             for (s of steps.value){
+              
+          console.log(s.fpVal.toFixed(2));
+        db.execute('INSERT INTO poids (valeur) VALUES (?)',[s.fpVal.toFixed(2)] );
+      }
+
+    }
+    else if(steps.dataTypeName==='com.google.calories.expended'){
+      console.log(steps.dataTypeName)
+             for (s of steps.value){
+          console.log(s.fpVal.toFixed(2));
+      db.execute('INSERT INTO calories (valeur) VALUES (?)',[s.fpVal.toFixed(2)] );
+      }
+    }
+    
+    else if(steps.dataTypeName==='com.google.heart_minutes.summary'){
+      console.log(steps.dataTypeName)
+    
+             for (s of steps.value){
+          console.log(s.fpVal);
+          if (typeof s.fpVal !== 'undefined') {
+            db.execute('INSERT INTO heartmin (valeur) VALUES (?)',[s.fpVal] );        }
+
+      }
+    }
+    else if(steps.dataTypeName==='com.google.heart_rate.summary'){
+      console.log(steps.dataTypeName)
+    
+             for (s of steps.value){
+          console.log(s.fpVal);
+          
+        db.execute('INSERT INTO heartbpm (valeur) VALUES (?)',[s.fpVal] );
+      }
+    }
+    else if(steps.dataTypeName==='com.google.active_minutes'){
+      console.log(steps.dataTypeName)
+    
+             for (s of steps.value){
+          console.log(s.intVal);
+          
+        db.execute('INSERT INTO activemin (valeur) VALUES (?)',[s.intVal] );
+      }
+    }
+    else if(steps.dataTypeName==='com.google.sleep.segment'){
+      console.log(steps.dataTypeName)
+    
+             for (s of steps.value){
+          console.log(s.intVal);
+          
         //db.execute('INSERT INTO poids (valeur) VALUES (?)',[s.fpVal] );
       }
-        else {console.log(s.intVal);
-         //db.execute('INSERT INTO pas (valeur) VALUES (?)',[s.intVal] );
+    }
+    else {
+      //console.log(steps.dataTypeName)
+    
+             for (s of steps.value){
+          console.log(s.intVal);
+          break;
+        //db.execute('INSERT INTO poids (valeur) VALUES (?)',[s.fpVal] );
       }
+    }
+      }
+      
+    }
+  }
+  
+}
+       
+          //console.log(s.intVal);
+          
+         //db.execute('INSERT INTO pas (valeur) VALUES (?)',[s.intVal] );
+      //}
         
         
        //db.execute('INSERT INTO poids (pas) VALUES (?)',[s.fpVal] );
-      }
-     }
-   }
+      //}
+     
+   
    //console.log(res.value);
 
   
-}
 
-}
+
+
 catch (e){
   console.log();
 }
@@ -177,6 +278,7 @@ return res.redirect('http://localhost:4200/#/tables');
 
 
    
+  
     
 
 app.use((req, res, next) => {
@@ -194,11 +296,16 @@ app.use('/pesages', pesageRoutes);
 app.use('/poids', poidsRoutes);
 app.use('/pas', pasRoutes);
 app.use('/auth', authRoutes);
-app.use('/etat', etatsRoutes);
+app.use('/etats', etatsRoutes);
 app.use('/rdv', rdvRoutes);
-
+app.use('/message', msgRoutes);
+app.use('/activemin', activeminRoutes);
+app.use('/heartmin', heartminRoutes);
+app.use('/heartbpm', heartbpmRoutes);
+app.use('/calories', caloriesRoutes);
 app.use('/user', userRoutes);
 app.use('/patient', patientRoutes);
+app.use('/medicament', medicamentRoutes);
 
 
 app.use(errorController.get404);

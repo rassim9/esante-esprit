@@ -14,22 +14,23 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./user-profile.component.scss']
 })
 export class UserProfileComponent implements OnInit {
-  Users$: Observable<User[]>;
 
 
+  users$: Observable<User[]>;
 
-  constructor(private AuthService:AuthService,private UserService:UserService ) { }
+  constructor(private UserService:UserService ) { }
 
   ngOnInit():void {
-    const id=this.AuthService.getuserId();
-    this.Users$=this.findid(id);
+    const id =parseInt(localStorage.getItem('id'));
+    this.users$=this.UserService.findid(id);
     }
-    findid(id: number): Observable<User[]>  {
-     return this.Users$ = this.UserService.findid(id);
+
+
+    findid(id): Observable<User[]>  {
+     return this.UserService.findid(id);
       
     }
 
-    
     
 
 }

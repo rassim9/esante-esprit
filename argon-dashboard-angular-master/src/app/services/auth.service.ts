@@ -57,7 +57,7 @@ export class AuthService {
       return this.http
         .post(`${this.url}/login`, { email, password }, this.httpOptions)
         .pipe(first(),
-          tap((tokenObject: { token: string;userId: Pick<User, "id">}) =>{
+          tap((tokenObject: { token: string;userId: Pick<User, "id">,role: string}) =>{
             this.userId = tokenObject.userId;
             localStorage.setItem("token",tokenObject.token);
            // console.log(this.userId.id);
@@ -65,11 +65,26 @@ export class AuthService {
 
             //localStorage.setItem("email",);
             this.isUserLoggedIn$.next(true);
-            this.router.navigate(["dashboard"]);
+           
             const token = localStorage.getItem('token');
             console.log(token);
+            console.log(email);
+            console.log(tokenObject.role);
+            localStorage.setItem("role",String(tokenObject.role));
+            localStorage.setItem("email",String(email));
             console.log(this.userId);
             localStorage.setItem("id",String(this.userId));
+            let Role = localStorage.getItem("role");
+    if (Role == "medecin"){
+      this.router.navigate(["icons"]);
+    }
+    else if (Role == "admin"){
+      this.router.navigate(["admin"]);
+
+    }
+    else {
+      this.router.navigate(["dashboard"]);
+    }
 
           }),
           catchError(

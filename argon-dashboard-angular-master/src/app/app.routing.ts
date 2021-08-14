@@ -15,15 +15,29 @@ import { UserProfileComponent } from 'src/app/pages/user-profile/user-profile.co
 import { TablesComponent } from 'src/app/pages/tables/tables.component';
 import { RdvComponent } from 'src/app/pages/rdv/rdv.component';
 import { AddEventComponent } from 'src/app/pages/add-event/add-event.component';
+import { EmailComponent } from 'src/app/pages/email/email.component';
+import { BoiteComponent } from 'src/app/pages/boite/boite.component';
+import { FaqComponent } from 'src/app/pages/faq/faq.component';
+import { RoleGuard } from './services/role.guard';
+import { AdminComponent } from './pages/admin/admin.component';
+import { RoleadminGuard } from './services/roleadmin.guard';
+
 
 const routes: Routes =[
   { path: 'dashboard',      component: DashboardComponent, canActivate: [AuthGuard] },
     { path: 'user-profile',   component: UserProfileComponent ,canActivate: [AuthGuard] },
     { path: 'tables',         component: TablesComponent ,canActivate: [AuthGuard] },
-    { path: 'icons',          component: IconsComponent ,canActivate: [AuthGuard] },
+    { path: 'icons',          component: IconsComponent ,canActivate: [AuthGuard,RoleGuard] },
     { path: 'maps',           component: MapsComponent ,canActivate: [AuthGuard] },
     { path: 'rdv',           component: RdvComponent ,canActivate: [AuthGuard] },
-    { path: 'addevent',           component: AddEventComponent ,canActivate: [AuthGuard] },
+    { path: 'addevent',           component: AddEventComponent ,canActivate: [AuthGuard,RoleGuard] },
+    { path: 'email',           component: EmailComponent ,canActivate: [AuthGuard] },
+    { path: 'boite',           component: BoiteComponent ,canActivate: [AuthGuard] },
+    { path: 'faq',           component: FaqComponent ,canActivate: [AuthGuard] },
+    { path: 'admin',           component: AdminComponent ,canActivate: [AuthGuard,RoleadminGuard] },
+    
+
+    
   {
     path: '',
     redirectTo: 'dashboard',

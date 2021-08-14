@@ -60,7 +60,7 @@ width: 50%;">
             <div class="form-group">
               <div class="input-group input-group-alternative">
                 <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                  <span class="input-group-text"><i class="ni ni-badge"></i></span>
                 </div>
                 <input class="form-control" placeholder="Taille" type="text" formControlName="taille">
               </div>
@@ -69,7 +69,7 @@ width: 50%;">
             <div class="form-group">
             <div class="input-group input-group-alternative">
               <div class="input-group-prepend">
-                <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                <span class="input-group-text"><i class="ni ni-badge"></i></span>
               </div>
               <input class="form-control" placeholder="Poids" type="text" formControlName="poids">
             </div>
@@ -77,21 +77,40 @@ width: 50%;">
             <div class="form-group">
               <div class="input-group input-group-alternative">
                 <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                  <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>
                 </div>
-                <input class="form-control" placeholder="Date de naissance" type="date" formControlName="date">
+                <input class="form-control" placeholder="Age" type="number" formControlName="age">
               </div>
             </div>
             <div class="form-group">
               <div class="input-group input-group-alternative">
                 <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                  <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
                 </div>
-                <input class="form-control" placeholder="role" type="text" formControlName="role">
+                <select  formControlName="sexe" class="form-control"  style="min-width: 200px;"> 
+                  <option value="">--Sexe--</option>
+                  <option value="Masculin">M</option>
+                  <option value="Feminin">F</option>
+                  </select>
               </div>
             </div>
-          
-          
+            <div class="form-group">
+              <div class="input-group input-group-alternative">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="ni ni-mobile-button"></i></span>
+                </div>
+                <input class="form-control" placeholder="tel" type="text" formControlName="tel">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group input-group-alternative">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
+                </div>
+                <input class="form-control" placeholder="Adresse" type="text" formControlName="adresse">
+              </div>
+            </div>
+            
             
             <div class="text-center">
               <button type="submit" class="btn btn-primary mt-4"  [disabled]="!signupForm.valid">Create account</button>
@@ -144,6 +163,26 @@ width: 50%;">
                   <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                 </div>
                 <input class="form-control" placeholder="Password" type="password" formControlName="password">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group input-group-alternative">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="ni ni-mobile-button"></i></span>
+                </div>
+                <input class="form-control" placeholder="Telephone" type="text" formControlName="tel">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group input-group-alternative">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
+                </div>
+                <select  formControlName="sexe" class="form-control" id="sexe" style="min-width: 200px;"> 
+                  <option value="">--Sexe--</option>
+                  <option value="Masculin">M</option>
+                  <option value="Feminin">F</option>
+                  </select>
               </div>
             </div>
             

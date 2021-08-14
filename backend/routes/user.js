@@ -10,6 +10,7 @@ const auth = require('../middleware/auth');
 const router = express.Router();
 
 router.get('/',userController.fetchAll);
+router.get('/all',userController.fetchallemail);
 router.get('/:id',userController.findid);
 
 module.exports = router;

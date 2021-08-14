@@ -26,5 +26,14 @@ export class UserService {
     catchError(this.errorHandlerService.handleError<User[]>("fetchAll", []))
     );
   }
+  findall():Observable<User[]> {
+    const url = "http://localhost:3000/user/all"
+
+    return this.http
+    .get<User[]>(url, { responseType: "json"})
+    .pipe(tap((_) => console.log("fetched User")),
+    catchError(this.errorHandlerService.handleError<User[]>("fetchAll", []))
+    );
+  }
 
 }

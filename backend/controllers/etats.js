@@ -4,7 +4,7 @@ const Etat = require('../models/etat');
 
 exports.fetchAll = async (req, res, next) => {
   try {
-    const [allEtats] = await Etat.fetchAll();
+    const [allEtats] = await Etat.fetchAll(req.params.id);
     res.status(200).json(allEtats);
   } catch (err) {
     if (!err.statusCode) {
@@ -20,13 +20,26 @@ exports.postEtat = async (req, res, next) => {
   if (!errors.isEmpty()) return;
 
   const forme = req.body.forme;
-  const desc = req.body.desc;
+  const description = req.body.description;
+  const temp = req.body.temp;
+  const pansement = req.body.pansement; 
+  const saignment = req.body.saignment;
+  const medicament = req.body.medicament;
+ 
+  const douleur = req.body.douleur;
+  const niveau = req.body.niveau;
   const username = req.body.username;
 
   try {
     const etatdetails = {
       forme: forme,
-      desc: desc,
+      description: description,
+      temp: temp,
+      pansement : pansement,
+      saignment : saignment,
+      medicament : medicament,
+      douleur : douleur,
+      niveau : niveau,
       username: username,
     };
     const result = await Etat.save(etatdetails);

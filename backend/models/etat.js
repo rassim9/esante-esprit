@@ -1,20 +1,27 @@
 const db = require('../util/database');
 
 module.exports = class Etat {
-  constructor(forme, desc, username) {
+  constructor(forme, description,temp,pansement,saignment,medicament,douleur,niveau, username) {
     this.forme = forme;
-    this.desc = desc;
+    this.description = description;
+    this.temp = temp;
+    this.pansement = pansement;
+    this.saignment = saignment;
+    this.medicament = medicament;
+    this.douleur = douleur;
+    this.niveau = niveau;
     this.username = username;
   }
 
-  static fetchAll() {
-    return db.execute('SELECT * FROM etats');
+  static 
+  fetchAll(id) {
+    return db.execute('SELECT * FROM etats WHERE username = ?',[id]);
   }
 
   static save(etat) {
     return db.execute(
-      'INSERT INTO etats (forme, description, username) VALUES (?, ?, ?)',
-      [etat.forme, etat.desc, etat.username]
+      'INSERT INTO etats (forme, description, temp,pansement,saignment,medicament,douleur,niveau,username) VALUES (?, ?, ?, ?, ?, ?, ?,?, ?)',
+      [etat.forme, etat.description,etat.temp,etat.pansement,etat.saignment,etat.medicament,etat.douleur,etat.niveau,etat.username] 
     );
   }
   

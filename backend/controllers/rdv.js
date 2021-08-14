@@ -13,6 +13,18 @@ next(err);
     }
 };
 
+exports.getAllRdvpatient = async(req,res,next) => {
+  try {
+const [allRdv] = await Rdv.fetchAllpatient(req.params.id);
+res.status(200).json(allRdv);
+  }catch(err) {
+if (!err.statusCode){
+  err.statusCode = 500
+}
+next(err);
+  }
+};
+
 
 exports.postRdv = async (req, res, next) => {
     const errors = validationResult(req);

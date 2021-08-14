@@ -26,7 +26,10 @@ router.post(
     body('taille'),
     body('poids'),
     body('date'),
-    body('role')
+    body('role'),
+    body('tel'),
+    body('sexe'),
+    body('adresse')
   ],
   authController.signup
 );

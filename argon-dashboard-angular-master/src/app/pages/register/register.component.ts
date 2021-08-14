@@ -25,10 +25,12 @@ export class RegisterComponent implements OnInit {
       name: new FormControl("", [Validators.required, Validators.minLength(2)]),
       email: new FormControl("", [Validators.required, Validators.email]),
       password: new FormControl("", [Validators.required,Validators.minLength(7),]),
-      taille: new FormControl("", ),
-      poids: new FormControl("", ),
-      date: new FormControl("", ),
-      role: new FormControl("", ),
+      taille: new FormControl("",Validators.required ),
+      poids: new FormControl("",Validators.required ),
+      age: new FormControl("", Validators.required),
+      tel: new FormControl("",Validators.required ),
+      sexe: new FormControl("", ),
+      adresse: new FormControl("",Validators.required ),
     });
   }
   signup(): void {
@@ -43,7 +45,10 @@ createFormGroupm(): FormGroup {
     name: new FormControl("", [Validators.required, Validators.minLength(2)]),
     email: new FormControl("", [Validators.required, Validators.email]),
     password: new FormControl("", [Validators.required,Validators.minLength(7),]),
-    role: new FormControl("", ),
+    
+    tel: new FormControl("",Validators.required ),
+    sexe: new FormControl("", ),
+
   });
 }
 signupm(): void {

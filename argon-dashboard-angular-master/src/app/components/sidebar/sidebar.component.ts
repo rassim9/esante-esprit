@@ -14,8 +14,9 @@ export const ROUTES: RouteInfo[] = [
     { path: '/maps', title: 'Etat',  icon:'ni-pin-3 text-orange', class: '' },
     { path: '/user-profile', title: 'User profile',  icon:'ni-single-02 text-yellow', class: '' },
     { path: '/tables', title: 'Tables',  icon:'ni-bullet-list-67 text-red', class: '' },
-    { path: '/rdv', title: 'Rdv',  icon:'ni-bullet-list-67 text-red', class: '' },
-    { path: '/addevent', title: 'addevent',  icon:'fat-add text-red', class: '' },
+    { path: '/rdv', title: 'Rdv',  icon:'ni-calendar-grid-58 text-blue', class: '' },
+    { path: '/addevent', title: 'Planifier',  icon:'ni-fat-add text-red', class: '' },
+    { path: '/faq', title: 'FAQ',  icon:'fa fa-info-circle', class: '' },
 
 ];
 

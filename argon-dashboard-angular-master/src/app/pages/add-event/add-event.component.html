@@ -18,10 +18,11 @@
 </div>
 <!-- Page content -->
 
-
+<div style="opacity: 1; background-repeat: no-repeat;background-size: cover;" [ngStyle]="{backgroundImage:'url(./assets/img/calendrier.jpg)'}" >
+  
 <div class="card-header border-0">
     <h3 class="mb-0">Ajouter Rendez-Vous</h3>
-  </div>
+  </div><br><br>
   <form #formDirective [formGroup]="form" (ngSubmit)="onSubmit(form.value)" novalidate>
   <div class="row">
     <div class="col-lg-3">
@@ -44,10 +45,11 @@
       </div>
     </div>
   </div>
+  <br><br>
   <button type="submit" class="btn btn-info" style="margin-left:90%;"  [disabled]="!form.valid">Envoyer</button>
             </form>
-
-  
+            <br><br><br><br><br><br>
+</div>
   
     <div class="container-fluid">
         <app-footer></app-footer>

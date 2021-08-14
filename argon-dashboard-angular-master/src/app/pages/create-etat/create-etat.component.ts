@@ -25,11 +25,11 @@ export class CreateEtatComponent implements OnInit {
     createFormGroup(): FormGroup {
       return new FormGroup({
         forme: new FormControl("", [Validators.required, Validators.minLength(5)]),
-        desc: new FormControl("", [Validators.required, Validators.minLength(10)]),
+        description: new FormControl("", [Validators.required, Validators.minLength(5)]),
       });
     }
 
-    onSubmit(formData : Pick<Etat, "forme" | "desc">):void {
+    onSubmit(formData : Pick<Etat, "forme" | "description">):void {
       console.log(formData);
       this.create.emit(null);
       this.form.reset();

@@ -2,6 +2,8 @@ import { Component, OnInit, Output, ViewChild, EventEmitter } from '@angular/cor
 import { FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { first } from "rxjs/operators";
+import { Options } from '@angular-slider/ngx-slider';
+
 
 
 import { Etat } from 'src/app/models/Etat';
@@ -29,17 +31,88 @@ userId: Pick<User, "id">;
     this.userId = this.authService.userId;
     }
 
+    value: number = 0;
+    options: Options = {
+      ceil: 8,
+      floor: 0,
+      showSelectionBar: true,
+      showTicks: true,
+      getTickColor: (value: number): string => {
+        if (value < 3) {
+          
+          return 'green';
+        }
+        if (value <= 5) {
+          return 'orange';
+        }
+        if (value > 5) {
+          return 'red';
+        }
+        
+        console.log(value);
+        return '#2AE02A';
+      }
+    };
+   
+
+sliderEvent(value) {
+    //alert(this.sliderValue);
+    console.log(value);
+    localStorage.setItem("niveau",value);
+  
+}
+
+
+
+
+
+    checkCheckBoxvalue1(event):string{
+     
+      console.log(String(event.target.checked));
+      localStorage.setItem("pansement",event.target.checked);
+      return event.target.checked;
+   }
+   checkCheckBoxvalue2(event):string{
+    console.log(String(event.target.checked));
+    localStorage.setItem("medicament",event.target.checked);
+    return event.target.checked;
+
+ }
+ checkCheckBoxvalue3(event):string{
+  console.log(String(event.target.checked));
+  localStorage.setItem("saignment",event.target.checked);
+  return event.target.checked;
+
+}
+checkCheckBoxvalue4(event):string{
+  console.log(String(event.target.checked));
+  localStorage.setItem("douleur",event.target.checked);
+  return event.target.checked;
+
+}
+
+
+    rangevalue = 37;
+    
+    getSliderValue(event):number {
+      console.log(event.target.value);
+       this.rangevalue = event.target.value;
+      localStorage.setItem("temp",event.target.value);
+      return event.target.value;
+   }
     fetchAll(): Observable<Etat[]> {
       return this.etatService.fetchAll();
     }
     createFormGroup(): FormGroup {
       return new FormGroup({
         forme: new FormControl("", [Validators.required, Validators.minLength(5)]),
-        desc: new FormControl("", [Validators.required, Validators.minLength(10)]),
+        description: new FormControl("", [Validators.required, Validators.minLength(10)]),
+       
+        
       });
     }
 
-    onSubmit(formData : Pick<Etat, "forme" | "desc">):void {
+    onSubmit(formData : Pick<Etat, "forme" | "description">):void {
       console.log(formData);
       //this.etatService.createEtat(formData,this.authService.userId).pipe(first()).subscribe((msg)=>console.log(msg));
       this.createFormGroup();
@@ -49,12 +122,14 @@ userId: Pick<User, "id">;
 
     }
     create(): void {
-
-      this.etatService.createEtat(this.form.value,this.authService.userId).subscribe((msg) => console.log(msg));  }
+      const id =localStorage.getItem('id');
+      this.etatService.createEtat(this.form.value).subscribe((msg) => console.log(msg));  }
       
-    delete(etatId: Pick<Etat, "id">): void{
-      this.etatService.deleteEtat(etatId).subscribe(()=>(this.etats$ = this.fetchAll()))
+    delete(id: Pick<Etat, "id">): void{
+      this.etatService.deleteEtat(id).subscribe(()=>(this.etats$ = this.fetchAll()))
     }
-    
+   
+
+
     
 }

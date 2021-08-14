@@ -15,8 +15,11 @@ exports.signup = async (req, res, next) => {
   const password = req.body.password;
   const taille = req.body.taille;
   const poids = req.body.poids;
-  const date = req.body.date;
-  const role = req.body.role;
+  const age = req.body.age;
+  const role = "Patient";
+  const tel = req.body.tel;
+  const sexe = req.body.sexe;
+  const adresse= req.body.adresse
 
   try {
     const hashedPassword = await bcrypt.hash(password, 12);
@@ -27,8 +30,11 @@ exports.signup = async (req, res, next) => {
       password: hashedPassword,
       taille: taille,
       poids: poids,
-      date: date,
-      role: role
+      age: age,
+      role: role,
+      tel: tel,
+      sexe: sexe, 
+      adresse: adresse
     };
 
     const result = await User.save(userDetails);
@@ -52,7 +58,9 @@ exports.signupm = async (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
   
-  const role = req.body.role;
+  const role = "Medecin";
+  const tel = req.body.tel;
+  const sexe = req.body.sexe;
 
   try {
     const hashedPassword = await bcrypt.hash(password, 12);
@@ -61,8 +69,9 @@ exports.signupm = async (req, res, next) => {
       name: name,
       email: email,
       password: hashedPassword,
-     
-      role: role
+      role: role,
+      tel: tel, 
+      sexe: sexe
     };
 
     const result = await User.savem(userDetails);
@@ -105,11 +114,12 @@ exports.login = async (req, res, next) => {
       {
         email: storedUser.email,
         userId: storedUser.id,
+        role: storedUser.role,
       },
       'secretfortoken',
       { expiresIn: '1h' }
     );
-    res.status(200).json({ token: token, userId: storedUser.id });
+    res.status(200).json({ token: token, userId: storedUser.id, role: storedUser.role  });
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;

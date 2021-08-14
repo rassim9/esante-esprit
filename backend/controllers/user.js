@@ -22,6 +22,18 @@ exports.fetchAll = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.fetchallemail = async (req, res, next) => {
+  try {
+    const [allUsers] = await User.fetchAllemail();
+    res.status(200).json(allUsers);
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+};
 exports.findid = async (req, res, next) => {
   try {
     

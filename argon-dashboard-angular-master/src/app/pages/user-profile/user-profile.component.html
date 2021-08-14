@@ -20,10 +20,6 @@
 </div>
 
 
-
-
-
-<br><br><br><br>
 <div class="container-fluid mt--7">
   <div class="row">
     <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
@@ -47,75 +43,43 @@
           <div class="row">
             <div class="col">
               <div class="card-profile-stats d-flex justify-content-center mt-md-5">
-                <div>
-                  <span class="heading">22</span>
-                  <span class="description">Friends</span>
+                <div *ngFor="let user of users$|async">
+                  <span class="heading">{{user.age}}</span>
+                  <span class="description">Age</span>
                 </div>
-                <div>
-                  <span class="heading">10</span>
-                  <span class="description">Photos</span>
+                <div *ngFor="let user of users$|async">
+                  <span class="heading">{{user.poids}}</span>
+                  <span class="description">Poids</span>
                 </div>
-                <div>
-                  <span class="heading">89</span>
-                  <span class="description">Comments</span>
+                <div *ngFor="let user of users$|async">
+                  <span class="heading">{{user.taille}}</span>
+                  <span class="description">Taille</span>
                 </div>
               </div>
             </div>
           </div>
-          <div class="text-center">
-            <h3>
-              Jessica Jones<span class="font-weight-light">, 27</span>
-            </h3>
-            <div class="h5 font-weight-300">
-              <i class="ni location_pin mr-2"></i>Bucharest, Romania
-            </div>
-            <div class="h5 mt-4">
-              <i class="ni business_briefcase-24 mr-2"></i>Solution Manager - Creative Tim Officer
-            </div>
-            <div>
-              <i class="ni education_hat mr-2"></i>University of Computer Science
+          <div class="text-center"*ngFor="let user of users$|async">
+            <h2 >
+              {{user.name}}, {{user.sexe}}
+            </h2>
+            <div class="h5 font-weight-300" *ngFor="let user of users$|async">
+              <i class="ni location_pin mr-2"></i>{{user.role}}
             </div>
             <hr class="my-4" />
-            <p>Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music.</p>
-            <a href="javascript:void(0)">Show more</a>
+
+            <div class="h5 mt-4" *ngFor="let user of users$|async">
+              <i class="ni business_briefcase-24 mr-2"></i>{{user.adresse}}
+            </div>
+            <hr class="my-4" />
+            <div *ngFor="let user of users$|async">
+              <i class="ni education_hat mr-2" ></i>{{user.email}}
+            </div>
+            
           </div>
         </div>
       </div>
     </div>
-    <div class="row mt-5">
-      <div class="col">
-        <div class="card bg-default shadow">
-          <div class="card-header bg-transparent border-0">
-            <h3 class="text-white mb-0">Card tables</h3>
-          </div>
-          <div class="table-responsive">
-            <table class="table align-items-center table-dark table-flush">
-              <thead class="thead-dark">
-                <tr>
-                  <th scope="col">id</th>
-                  <th scope="col">name</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let user of users$ | async">
-                  
-                  <td>
-                    {{ user.id}}
-                  </td>
-                  <td>
-                  {{ user.name }}
-                  </td>
-                  
-                 
-                  
-                </tr>
-                
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
+    
     <div class="col-xl-8 order-xl-1">
       <div class="card bg-secondary shadow">
         <div class="card-header bg-white border-0">
@@ -124,40 +88,52 @@
               <h3 class="mb-0">My account</h3>
             </div>
             <div class="col-4 text-right">
-              <a href="#!" class="btn btn-sm btn-primary">Settings</a>
             </div>
           </div>
         </div>
-        <div class="card-body">
-          <form>
+        <div class="card-body" >
+          <form >
             <h6 class="heading-small text-muted mb-4">User information</h6>
             <div class="pl-lg-4">
               <div class="row">
                 <div class="col-lg-6">
-                  <div class="form-group">
+                  <div class="form-group" >
+                     
                     <label class="form-control-label" for="input-username">Username</label>
-                    <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Username" value="lucky.jesse">
+                    <ng-container *ngFor="let user of users$| async ;">
+                    <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Username" [(ngModel)]="user.name" name="name">
+                  </ng-container>
                   </div>
                 </div>
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-email">Email address</label>
-                    <input type="email" id="input-email" class="form-control form-control-alternative" placeholder="jesse@example.com">
-                  </div>
+                    <ng-container *ngFor="let user of users$| async ;">
+                      <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Email" [(ngModel)]="user.email" name="email">
+                    </ng-container>
+                                    </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-lg-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-first-name">First name</label>
-                    <input type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="First name" value="Lucky">
-                  </div>
+                    <label class="form-control-label" for="input-first-name">Sexe</label><br>
+                    <ng-container *ngFor="let user of users$| async ;">
+                      <select class="form-control" style="min-width: 200px;"  id="pet-select">
+                        <option value="">--     Sexe     -- </option>
+                        <option value="Masculin">M</option>
+                        <option value="Feminin">F</option>
+                        </select>                  
+                        </ng-container>
+                                    </div>
                 </div>
                 <div class="col-lg-6">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-last-name">Last name</label>
-                    <input type="text" id="input-last-name" class="form-control form-control-alternative" placeholder="Last name" value="Jesse">
-                  </div>
+                    <label class="form-control-label" for="input-last-name">Telephone</label>
+                    <ng-container *ngFor="let user of users$| async ;">
+                      <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Tel" [(ngModel)]="user.tel" name="tel">
+                    </ng-container>       
+                             </div>
                 </div>
               </div>
             </div>
@@ -169,46 +145,49 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label class="form-control-label" for="input-address">Address</label>
-                    <input id="input-address" class="form-control form-control-alternative" placeholder="Home Address" value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09" type="text">
+                    <ng-container *ngFor="let user of users$| async ;">
+                    <input id="input-address" class="form-control form-control-alternative" placeholder=" Adresss" [(ngModel)]="user.adresse" type="text">
+                  </ng-container>
                   </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-lg-4">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-city">City</label>
-                    <input type="text" id="input-city" class="form-control form-control-alternative" placeholder="City" value="New York">
+                    <label class="form-control-label" for="input-city">Age</label>
+                    <ng-container *ngFor="let user of users$| async ;">
+                    <input type="number" id="input-city" class="form-control form-control-alternative"  [(ngModel)]="user.age" name="age">
+                    </ng-container>
                   </div>
                 </div>
                 <div class="col-lg-4">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-country">Country</label>
-                    <input type="text" id="input-country" class="form-control form-control-alternative" placeholder="Country" value="United States">
-                  </div>
+                    <label class="form-control-label" for="input-country">Taille</label>
+                    <ng-container *ngFor="let user of users$| async ;">
+                      <input type="text" id="input-city" class="form-control form-control-alternative" placeholder="Taille" [(ngModel)]="user.taille" name="taille">
+                      </ng-container>
+                                      </div>
                 </div>
                 <div class="col-lg-4">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-country">Postal code</label>
-                    <input type="number" id="input-postal-code" class="form-control form-control-alternative" placeholder="Postal code">
-                  </div>
+                    <label class="form-control-label" for="input-country">Poids</label>
+                    <ng-container *ngFor="let user of users$| async ;">
+                    <input type="text" id="input-city" class="form-control form-control-alternative" placeholder="Poids" [(ngModel)]="user.poids" name="poids">
+                    </ng-container>                  </div>
                 </div>
               </div>
             </div>
             <hr class="my-4" />
-            <!-- Description -->
-            <h6 class="heading-small text-muted mb-4">About me</h6>
-            <div class="pl-lg-4">
-              <div class="form-group">
-                <label>About Me</label>
-                <textarea rows="4" class="form-control form-control-alternative" placeholder="A few words about you ...">A beautiful Dashboard for Bootstrap 4. It is Free and Open Source.</textarea>
-              </div>
-            </div>
+            
+            
           </form>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+
 <div class="container-fluid">
   <app-footer></app-footer>
 </div>

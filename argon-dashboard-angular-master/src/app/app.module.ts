@@ -2,10 +2,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
 
 
 
 
+
+import { ChartsModule } from 'ng2-charts';
 
 
 
@@ -38,6 +41,10 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction'; 
 import { ReactiveFormsModule } from '@angular/forms';
 import { AddEventComponent } from './pages/add-event/add-event.component';
+import { EmailComponent } from './pages/email/email.component';
+import { BoiteComponent } from './pages/boite/boite.component';
+import { FaqComponent } from './pages/faq/faq.component';
+import { AdminComponent } from './pages/admin/admin.component';
 FullCalendarModule.registerPlugins([ 
   dayGridPlugin,
   interactionPlugin
@@ -54,7 +61,9 @@ FullCalendarModule.registerPlugins([
     AppRoutingModule,
     BrowserModule,
     FullCalendarModule,
-   
+    ChartsModule,
+    NgxSliderModule
+
 
     
   ],
@@ -72,6 +81,10 @@ FullCalendarModule.registerPlugins([
     FooterComponent,
     RdvComponent,
     AddEventComponent,
+    EmailComponent,
+    BoiteComponent,
+    FaqComponent,
+    AdminComponent,
     
   ],
   providers: [

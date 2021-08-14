@@ -11,31 +11,117 @@
   </div>
 </div>
 <!-- Page content -->
+<div  style=" background-repeat: no-repeat;background-size: cover;" [ngStyle]="{backgroundImage:'url(./assets/img/med3.jpg)'}" >
 
 <div class="card-header border-0">
-  <h3 class="mb-0">my form</h3>
+  <h3 class="mb-0">Mes Taches</h3>
 </div>
+<div class="pl-lg-4">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label class="form-control-label" for="input-address">Quel est votre temperature ?</label><br>
+        
+        <input id="temp" type="range"  min="30" max="50" value="37" step="1" (change)="getSliderValue($event)"  (oninput)="getSliderValue($event)"  />
+        {{ rangevalue }}
+
+        <br>
+        
+      </div>
+    </div>
+  </div>
+  </div>
 <form #formDirective [formGroup]="form" (ngSubmit)="onSubmit(form.value)" novalidate>
+
+
             <div class="pl-lg-4">
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-address">Forme</label>
+                    <label class="form-control-label" for="input-address">Comment vous sentez aujourd'hui ?   </label>
                     <input  class="form-control form-control-alternative" placeholder="comment ca va ?" type="text" formControlName="forme" >
                   </div>
                 </div>
               </div>
               </div>
+
+              <div class="pl-lg-4">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-address">Vous avez changer votre pansement ?   </label>
+                      <div class="switch-toggle">
+                        <input type="checkbox" id="pansement" (change)="checkCheckBoxvalue1($event)" >
+                        <label for="pansement"></label>
+                    </div>         
+                      </div>
+                  </div>
+                </div>
+                </div>
+                <div class="pl-lg-4">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-address">Avez vous un saignement ?</label>
+                        <div class="switch-toggle">
+                          <input type="checkbox" id="saignement" (change)="checkCheckBoxvalue3($event)" >
+                          <label for="saignement"></label>
+                      </div>  
+                         </div>
+                    </div>
+                  </div>
+                  </div>
+
+                  <div class="pl-lg-4">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="form-control-label" for="input-address">Vous avez des douleurs?</label>
+                          <div class="switch-toggle">
+                            <input type="checkbox" id="douleur" (change)="checkCheckBoxvalue4($event)" >
+                            <label for="douleur"></label>
+                        </div>  
+                           </div>
+                      </div>
+                    </div>
+                    </div>
+
+                    <div class="pl-lg-4">
+                      <div class="row">
+                        <div class="col-md-8">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-address">Niveau des douleurs ?</label>
+                            <ngx-slider [(value)]="value" [options]="options" (mouseup)="sliderEvent(value)"></ngx-slider>
+
+                             </div>
+                        </div>
+                      </div>
+                      </div>
+
+                  <div class="pl-lg-4">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="form-control-label" for="input-address">Avez vous pris vos medicaments ?</label>
+                          <div class="switch-toggle">
+                            <input type="checkbox" id="medicament" (change)="checkCheckBoxvalue2($event)" >
+                            <label for="medicament"></label>
+                        </div>  
+                           </div>
+                      </div>
+                    </div>
+                    </div>
             <!-- Description -->
           
             <div class="pl-lg-4">
               <div class="form-group">
-                <label>About Me</label>
-                <textarea rows="4" class="form-control form-control-alternative" placeholder="A few words about you ..." formControlName="desc"></textarea>
+                <label>Description</label>
+                <textarea rows="4" class="form-control form-control-alternative" placeholder="A few words about you ..." formControlName="description"></textarea>
               </div>
             </div>
             <button type="submit" class="btn btn-info" style="margin-left:90%;"  [disabled]="!form.valid">Envoyer</button>
           </form>
+        
           <hr class="my-4" />
 <!-- Table -->
 <div class="row">
@@ -48,12 +134,17 @@
         <table class="table align-items-center table-flush">
           <thead class="thead-light">
             <tr >
-              <th scope="col">num</th>
+              <th scope="col">Num</th>
               <th scope="col">Forme</th>
-              <th scope="col">desc</th>
+              <th scope="col">Description</th>
               
-              <th scope="col">Users</th>
-              <th scope="col">Added at</th>
+              <th scope="col">Temperature</th>
+              <th scope="col">Pansement</th>
+              <th scope="col">Saignement</th>
+              <th scope="col">Medicament</th>
+              <th scope="col">Douleur</th>
+              <th scope="col">Intensité</th>
+              <th scope="col">Date</th>
               <th scope="col"></th>
             </tr>
           </thead>
@@ -68,7 +159,22 @@
                 {{ etat.description }}
               </td>
               <td>
-                {{ etat.username }}
+                {{ etat.temp }}
+              </td>
+              <td>
+                {{ etat.pansement }}
+              </td>
+              <td>
+                {{ etat.saignment }}
+              </td>
+              <td>
+                {{ etat.medicament }}
+              </td>
+              <td>
+                {{ etat.douleur }}
+              </td>
+              <td>
+                {{ etat.niveau }}
               </td>
               <td>
                 {{ etat.created }}
@@ -120,7 +226,7 @@
   </div>
 </div>
 
-
+</div>
 
 <div class="container-fluid">
   <app-footer></app-footer>
