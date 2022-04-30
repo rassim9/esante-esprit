@@ -4,8 +4,8 @@ import { Location, LocationStrategy, PathLocationStrategy } from '@angular/commo
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { User } from "src/app/models/User";
-import { first,catchError, tap } from 'rxjs/operators';
-import { BehaviorSubject, Observable } from "rxjs";
+import { first,catchError, tap, map } from 'rxjs/operators';
+import { BehaviorSubject, Observable, timer } from "rxjs";
 
 
 
@@ -28,8 +28,14 @@ export class NavbarComponent implements OnInit {
     this.location = location;
   }
 
-
+dateTime: Observable<Date>;
   ngOnInit() {
+    this.dateTime = timer(0, 1000).pipe(
+      map(()=> {
+        return new Date()
+      })
+    )
+    
     this.listTitles = ROUTES.filter(listTitle => listTitle);
   }
   getTitle(){

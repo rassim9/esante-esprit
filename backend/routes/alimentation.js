@@ -9,8 +9,8 @@ const auth = require('../middleware/auth');
 
 
 
-router.get('/my/:id',alimentationController.fetchmy)
-router.get('/myalimentation/:email',alimentationController.fetchmyAlimentaion)
+router.get('/my/:email',alimentationController.fetchmy)
+router.get('/myalimentation/:email',alimentationController.fetchmyAlimentation)
 router.post(
   '/',
   [
@@ -23,10 +23,10 @@ router.post(
    
 
   ],
-  medicamentController.postMedicament
+  alimentationController.postAlimentation
 );
 
-router.delete('/:id', medicamentController.deleteMedicament);
+router.delete('/:id', alimentationController.deleteAlimentation);
 
 module.exports = router;
 

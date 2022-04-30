@@ -35,5 +35,41 @@ export class UserService {
     catchError(this.errorHandlerService.handleError<User[]>("fetchAll", []))
     );
   }
+  findNut():Observable<User[]> {
+    const url = "http://localhost:3000/user/nut"
+
+    return this.http
+    .get<User[]>(url, { responseType: "json"})
+    .pipe(tap((_) => console.log("fetched nut")),
+    catchError(this.errorHandlerService.handleError<User[]>("fetchAll", []))
+    );
+  }
+  findpsy():Observable<User[]> {
+    const url = "http://localhost:3000/user/psy"
+
+    return this.http
+    .get<User[]>(url, { responseType: "json"})
+    .pipe(tap((_) => console.log("fetched nut")),
+    catchError(this.errorHandlerService.handleError<User[]>("fetchAll", []))
+    );
+  }
+  findcard():Observable<User[]> {
+    const url = "http://localhost:3000/user/card"
+
+    return this.http
+    .get<User[]>(url, { responseType: "json"})
+    .pipe(tap((_) => console.log("fetched nut")),
+    catchError(this.errorHandlerService.handleError<User[]>("fetchAll", []))
+    );
+  }
+  findautrem():Observable<User[]> {
+    const url = "http://localhost:3000/user/autrem"
+
+    return this.http
+    .get<User[]>(url, { responseType: "json"})
+    .pipe(tap((_) => console.log("fetched nut")),
+    catchError(this.errorHandlerService.handleError<User[]>("fetchAll", []))
+    );
+  }
 
 }

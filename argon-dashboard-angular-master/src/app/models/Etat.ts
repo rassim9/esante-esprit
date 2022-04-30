@@ -8,6 +8,7 @@ export interface Etat {
     medicament:string;
     douleur:string;
     niveau:string;
-    username:number;
+    note:string;
+    username:string;
     created:Date
 }

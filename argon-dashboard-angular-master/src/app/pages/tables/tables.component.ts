@@ -13,10 +13,12 @@ import { Heartmin } from 'src/app/models/heartmin';
 import { Heartbpm } from 'src/app/models/heartbpm';
 import { Medicament } from 'src/app/models/medicament';
 import { Rdv } from 'src/app/models/Rdv';
+import { Nutritionniste } from 'src/app/models/Nutritionniste';
 
 import { PasService } from 'src/app/services/pas.service';
 import { MedicamentService } from 'src/app/services/medicament.service';
 import { RdvService } from 'src/app/services/rdv.service';
+import { FicheService } from 'src/app/services/fiche.service';
 
 import { PoidsService } from 'src/app/services/poids.service';
 import { PatientService } from 'src/app/services/patient.service';
@@ -25,6 +27,9 @@ import { ChartDataSets } from 'chart.js';
 import { Data } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RdvComponent } from '../rdv/rdv.component';
+import { Operation } from 'src/app/models/operation';
+import { Cardiologue } from 'src/app/models/Cardiologue';
+
 
 @Component({
   selector: 'app-tables',
@@ -42,9 +47,13 @@ export class TablesComponent implements OnInit {
   heartbpm$:Observable<Heartbpm[]>
   medicament$:Observable<Medicament[]>
   rdv$:Observable<Rdv[]>
+  nut$:Observable<Nutritionniste[]>
+  card$:Observable<Cardiologue[]>
   form: FormGroup ;
+  formop: FormGroup ;
 
-  constructor(private pesageListCrudService: PesageListCrudService, private PoidsService: PoidsService,private PasService: PasService,private PatientService: PatientService,private MedicamentService: MedicamentService,private RdvService: RdvService) { }
+  constructor(private pesageListCrudService: PesageListCrudService, private PoidsService: PoidsService,private PasService: PasService,private PatientService: PatientService,
+    private MedicamentService: MedicamentService,private RdvService: RdvService,private FicheService : FicheService) { }
 
   ngOnInit():void {
     this.pesages$ = this.pesageListCrudService.fetchAll();
@@ -58,7 +67,10 @@ export class TablesComponent implements OnInit {
     this.heartbpm$ = this.PasService.fetchAllheartbpm();
     this.medicament$ = this.MedicamentService.fetchAllmedicament();
     this.rdv$ = this.RdvService.fetchAllp();
+    this.nut$ = this.FicheService.fetchAllnut();
+    this.card$ = this.FicheService.fetchAllcard();
     this.form = this.createFormGroup();
+    this.formop = this.createFormGroupop();
     
 
   }
@@ -125,7 +137,13 @@ fetchp():void{
   fetchAllrdv():Observable<Rdv[]>{
     return this.RdvService.fetchAllp();
   }
-
+  fetchAllnut():Observable<Nutritionniste[]>{
+    return this.FicheService.fetchAllnut();
+  }
+  fetchAllcard():Observable<Cardiologue[]>{
+    return this.FicheService.fetchAllcard();
+  }
+  
 
   post(pesagePoids: Partial<Pesage>): void {
     const poids = (<string>pesagePoids).trim();
@@ -193,9 +211,38 @@ fetchp():void{
       .pipe(tap(() => (this.medicament$ = this.fetchAllmedicament())));
   }
 
+  createFormGroupop(): FormGroup {
+    return new FormGroup({
+      etablissement: new FormControl("", [Validators.required, Validators.minLength(2)]),
+      date: new FormControl("", [Validators.required]),
+      heure: new FormControl("", [Validators.required, Validators.minLength(2)]),
+      precautions: new FormControl("", [Validators.required, ]),
+      note: new FormControl("", [Validators.required, ]),
+     
 
+    });
+  }
 
+  onSubmitop(formData : Pick<Operation, "etablissement" | "date" | "heure"| "precautions"| "note">):void {
+    console.log(formData);
+    this.createFormGroupop();
+    this.createop();
+    this.formop.reset();
 
+  }
+  createop(): void {
 
+    this.FicheService.createoperation(this.formop.value).subscribe((msg) => console.log(msg));  }
+
+    postid(): void {
+      
+    const email= localStorage.getItem("email patient");
+
+      this.FicheService
+        .postid();
+        
+       
+    }
+    
 
 }

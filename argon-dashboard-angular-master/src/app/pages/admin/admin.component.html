@@ -12,18 +12,18 @@
     <div class="header-body">
       <!-- Card stats -->
      
-
+      <h1 class="display-2 text-white">Interface Administrateur</h1>
 
     </div>
   </div>
 </div>
-<h1 class="mb-0">Interface Administrateur</h1>
+
 <!-- Page content -->
 <div class="row">
     <div class="col">
       <div class="card shadow">
         <div class="card-header border-0">
-          <h3 class="mb-0">Users tables</h3>
+          <h3 class="mb-0">Liste d'utilisateurs</h3>
         </div>
         <div class="table-responsive">
           <table class="table align-items-center table-flush">
@@ -33,6 +33,7 @@
                 <th scope="col">Email</th>
                 
                 <th scope="col">Role</th>
+                <th scope="col">Profession</th>
                 
                 
                
@@ -52,7 +53,9 @@
                     <td>
                       {{ user.role }}
                       </td>
-                      
+                      <td>
+                        {{ user.profession }}
+                        </td>
                     
                
                 <td class="text-right">
@@ -76,63 +79,7 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col">
-      <div class="card shadow">
-        <div class="card-header border-0">
-          <h3 class="mb-0">Patients tables</h3>
-        </div>
-        <div class="table-responsive">
-          <table class="table align-items-center table-flush">
-            <thead class="thead-light">
-              <tr>
-                <th scope="col">Email</th>
-                 <th scope="col">Nom</th>
 
-                <th scope="col">Prenom</th>
-                
-                
-               
-                <th scope="col">action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let p of Patients$ | async">
-                
-                <td>
-                  {{ p.email}}
-                </td>
-                <td>
-                {{ p.nom }}
-                </td>
-                
-                    <td>
-                      {{ p.prenom }}
-                      </td>
-                      
-                    
-               
-                <td class="text-right">
-                  
-                  <div ngbDropdown placement="bottom-right">
-                    <a class="btn btn-sm btn-icon-only text-light"  ngbDropdownToggle>
-                      <i class="fas fa-ellipsis-v"></i>
-                    </a>
-                    <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
-                     
-                      <a class="dropdown-item" (click)="delete(user.id)" >Supprimer</a>
-                
-                    </div>
-                  </div>
-                </td>
-              </tr>
-              
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
 
 <div class="container-fluid">
     <app-footer></app-footer>

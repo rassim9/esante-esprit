@@ -1,5 +1,7 @@
 const { validationResult } = require('express-validator');
 const Rdv = require('../models/rdv');
+const sgMail = require('@sendgrid/mail')
+
 
 exports.getAllRdv = async(req,res,next) => {
     try {
@@ -43,7 +45,26 @@ exports.postRdv = async (req, res, next) => {
         p1: p1,
         p2: p2,
       };
-      const result = await Rdv.save(Rdvdetails);
+      
+      sgMail.setApiKey('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');
+
+      
+         const msg = {
+           to: p2, // Change to your recipient
+           from: 'rassim.zouari@esprit.tn', // Change to your verified sender
+           subject: 'Rendez-Vous',
+           text: 'Rendez-Vous ',
+           html: '<strong>Bonjour, <br> Vous etes invité pour un rendez avec le doctor le </strong>'+date,
+         }
+         sgMail
+           .send(msg)
+           .then(() => {
+             console.log('Email sent')
+           })
+           .catch((error) => {
+             console.error(error)
+           })
+           const result = await Rdv.save(Rdvdetails);
       res.status(201).json({ message: 'Posted!' });
     } catch (err) {
       if (!err.statusCode) {

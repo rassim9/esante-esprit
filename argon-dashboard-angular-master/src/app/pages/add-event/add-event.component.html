@@ -39,9 +39,15 @@
     </div>
     
     <div class="col-lg-3">
+      
       <div class="form-group">
-        <label class="form-control-label" for="input-country">X2</label>
-        <input type="number" id="input-postal-code" class="form-control form-control-alternative" placeholder="Patient/Medecin"  formControlName="p2">
+                  
+        <label class="form-control-label" for="input-address">patient</label><br>
+    
+        <select formControlName="p2"  style="min-width: 200px;" class="form-control">
+          <option value="">--Pour--</option>
+          <option *ngFor="let patient of Patients$ | async" [ngValue]="patient.email" > {{ patient.email }}</option>
+        </select>
       </div>
     </div>
   </div>

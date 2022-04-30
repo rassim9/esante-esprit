@@ -75,7 +75,7 @@ export class AuthService {
             console.log(this.userId);
             localStorage.setItem("id",String(this.userId));
             let Role = localStorage.getItem("role");
-    if (Role == "medecin"){
+    if (Role == "Medecin"){
       this.router.navigate(["icons"]);
     }
     else if (Role == "admin"){

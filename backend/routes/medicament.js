@@ -6,10 +6,11 @@ const router = express.Router();
 
 const medicamentController = require('../controllers/medicament');
 const auth = require('../middleware/auth');
+const Medicament = require('../models/medicament');
 
 
 
-router.get('/my/:id',medicamentController.fetchmy)
+router.get('/my/:email',medicamentController.fetchmy)
 router.get('/mymedicament/:email',medicamentController.fetchmymedicament)
 router.post(
   '/',

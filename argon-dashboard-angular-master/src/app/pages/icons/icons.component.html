@@ -10,6 +10,8 @@
 <div class="header bg-gradient-danger pb-4 pt-5 pt-md-8">
   <div class="container-fluid">
     <div class="header-body">
+      <h1 class="display-2 text-white" *ngFor="let user of users$| async ;">Bienvenue {{user.name}}</h1><br>
+
       <!-- Card stats -->
       <div class="row">
         <div class="col-xl-3 col-lg-6">
@@ -18,7 +20,7 @@
               <div class="row">
                 <div class="col" *ngFor="let num of num$ | async">
                   <h5 class="card-title text-uppercase text-muted mb-0">Nombre des patients</h5>
-                  <span class="h2 font-weight-bold mb-0">{{ num.Count }}</span>
+                  <span class="h2 font-weight-bold mb-0">{{ num.Count-1 }}</span>
                 </div>
                 <div class="col-auto">
                   <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
@@ -26,10 +28,7 @@
                   </div>
                 </div>
               </div>
-              <p class="mt-3 mb-0 text-muted text-sm">
-                <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                <span class="text-nowrap">Since last month</span>
-              </p>
+              
             </div>
           </div>
         </div>
@@ -39,7 +38,7 @@
               <div class="row">
                 <div class="col" *ngFor="let num of nump$ | async">
                   <h5 class="card-title text-uppercase text-muted mb-0">Mes patients</h5>
-                  <span class="h2 font-weight-bold mb-0">{{ num.Count }}</span>
+                  <span class="h2 font-weight-bold mb-0">{{ num.Count+1 }}</span>
                 </div>
                 <div class="col-auto">
                   <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
@@ -47,55 +46,11 @@
                   </div>
                 </div>
               </div>
-              <p class="mt-3 mb-0 text-muted text-sm">
-                <span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 3.48%</span>
-                <span class="text-nowrap">Since last week</span>
-              </p>
+            
             </div>
           </div>
         </div>
-        <div class="col-xl-3 col-lg-6">
-          <div class="card card-stats mb-4 mb-xl-0">
-            <div class="card-body">
-              <div class="row">
-                <div class="col">
-                  <h5 class="card-title text-uppercase text-muted mb-0">Sales</h5>
-                  <span class="h2 font-weight-bold mb-0">924</span>
-                </div>
-                <div class="col-auto">
-                  <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
-                    <i class="fas fa-users"></i>
-                  </div>
-                </div>
-              </div>
-              <p class="mt-3 mb-0 text-muted text-sm">
-                <span class="text-warning mr-2"><i class="fas fa-arrow-down"></i> 1.10%</span>
-                <span class="text-nowrap">Since yesterday</span>
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-3 col-lg-6">
-          <div class="card card-stats mb-4 mb-xl-0">
-            <div class="card-body">
-              <div class="row">
-                <div class="col">
-                  <h5 class="card-title text-uppercase text-muted mb-0">Performance</h5>
-                  <span class="h2 font-weight-bold mb-0">49,65%</span>
-                </div>
-                <div class="col-auto">
-                  <div class="icon icon-shape bg-info text-white rounded-circle shadow">
-                    <i class="fas fa-percent"></i>
-                  </div>
-                </div>
-              </div>
-              <p class="mt-3 mb-0 text-muted text-sm">
-                <span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 12%</span>
-                <span class="text-nowrap">Since last month</span>
-              </p>
-            </div>
-          </div>
-        </div>
+        
       </div>
 
 
@@ -200,16 +155,10 @@
                             <input type="text"  class="form-control form-control-alternative" placeholder="Taille"  formControlName="taille">
                           </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-8">
                           <div class="form-group">
-                            <label class="form-control-label" for="input-country">Periode</label>
-                            <input type="text"  class="form-control form-control-alternative" placeholder="periode"  formControlName="periode">
-                          </div>
-                        </div>
-                        <div class="col-lg-4">
-                          <div class="form-group">
-                            <label class="form-control-label" for="input-country">etat</label>
-                            <input type="text" class="form-control form-control-alternative" placeholder="etat"  formControlName="etat">
+                            <label class="form-control-label" for="input-country">Type d'intervention</label>
+                            <input type="text"  class="form-control form-control-alternative" placeholder="type"  formControlName="type">
                           </div>
                         </div>
                         <div class="col-lg-4">
@@ -218,7 +167,58 @@
                             <input type="date" class="form-control form-control-alternative" placeholder="date"  formControlName="dateint">
                           </div>
                         </div>
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-country">Mon RPPS</label>
+                            <input type="text" class="form-control form-control-alternative" placeholder="RPPS"  formControlName="rpps">
+                          </div>
+                        </div>
+                        
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-country">Nutritionniste</label>
+                            <select  formControlName="Nutritionniste" class="form-control"  style="min-width: 100px;"> 
+                              <option value="non mentionné">Nutritionniste</option>
+                              <option *ngFor="let nut of nut$ | async" [ngValue]="nut.email" > {{ nut.name }}</option>
+                              </select>               
+                             </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-country">Psychologue</label>
+                            <select  formControlName="Psychologue" class="form-control"  style="min-width: 100px;"> 
+                              <option value="non mentionné">Psychologue</option>
+                              <option *ngFor="let psy of psy$ | async" [ngValue]="psy.email" > {{ psy.name }}</option>
+                              </select>               
+                             </div>
+                        </div>
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-country">Cardiologue</label>
+                            <select  formControlName="Cardiologue" class="form-control"  style="min-width: 100px;"> 
+                              <option value="non mentionné">Cardiologue</option>
+                              <option *ngFor="let card of card$ | async" [ngValue]="card.email" > {{ card.name }}</option>
+                              </select>               
+                             </div>
+                            </div>
+                            <div class="col-lg-4">
+                              <div class="form-group">
+                                <label class="form-control-label" for="input-country">Autre soignant</label>
+                                <select  formControlName="Soignant" class="form-control"  style="min-width: 100px;"> 
+                                  <option value="non mentionné">autre</option>
+                                  <option *ngFor="let autre of autre$ | async" [ngValue]="autre.email" > {{ autre.name }}</option>
+                                  </select>               
+                                 </div>
+                                </div>
+                     
+                      <div class="col-lg-4">
+                        <div class="form-group">
+                          <label class="form-control-label" for="input-country">Autre </label>
+                          <input type="text" class="form-control form-control-alternative" placeholder="autre"  formControlName="autre">
+                        </div>
                       </div>
+                    </div>
+                    
                       <button type="submit" class="btn btn-info" style="margin-left:10%;"  [disabled]="!form.valid">Envoyer</button>
                                 </form>
                   </div>
@@ -240,13 +240,17 @@
           <thead class="thead-light">
             <tr>
               <th scope="col">Num</th>
-              <th scope="col">email</th>
+              <th scope="col">Nom Prenom</th>
               
-              <th scope="col">Periode</th>
-              <th scope="col">Etat</th>
-              <th scope="col">Date intervention</th>
+             
+              <th scope="col">Date 1er RDV</th>
               
               <th scope="col">Details</th> 
+              <th scope="col">Nutritionniste</th> 
+              <th scope="col">Cardiologue</th> 
+              <th scope="col">Psychologue</th> 
+              <th scope="col">Autre</th> 
+              <th scope="col">Fiche Patient</th> 
               <th scope="col">action</th>
             </tr>
           </thead>
@@ -257,37 +261,328 @@
                 {{ patient.id}}
               </td>
               <td>
-              {{ patient.email }}
+              {{ patient.nom }}&nbsp;{{ patient.prenom }}
               </td>
               
-                  <td>
-                    {{ patient.periode }}
-                    </td>
-                    <td>
-                      {{ patient.etat }}
-                      </td>
+                  
+                   
                       <td>
-                        {{ patient.dateint }}
+                        {{ patient.daterdv|date:'mediumDate'  }}
                         </td>
                   <td>
                   
                      <!-- -->
-                     <a href="https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffitness.body.read%20%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffitness.activity.read%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffitness.heart_rate.read%20%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.me%20profile%20email%20openid&state=%7B%7D&response_type=code&client_id={{patient.patientid}}&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fsteps"><button (click)="postid(patient.id,patient.email)"><i class="fas fa-file-alt" style="font-size:25px"></i></button></a>
+                     <a href="https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffitness.body.read%20%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffitness.activity.read%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffitness.heart_rate.read%20%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.me%20profile%20email%20openid&state=%7B%7D&response_type=code&client_id={{patient.patientid}}&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fsteps"><button (click)="postid(patient.email)"><i class="fas fa-plus"></i></button></a>
 
                    <!--<a href="https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffitness.body.read%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffitness.activity.read%20%20profile%20email%20openid&state=%7B%7D&response_type=code&client_id=422378604665-gvfnd9e6gm73nci5gpmpr0iih8ksut3n.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fsteps">View</a> --> 
                     </td>
-             
-              <td class="text-right">
-                <div ngbDropdown placement="bottom-right">
-                  <a class="btn btn-sm btn-icon-only text-light"  ngbDropdownToggle>
-                    <i class="fas fa-ellipsis-v"></i>
-                  </a>
-                  <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
-                   
-                    <a class="dropdown-item" (click)="delete(patient.id)" >Supprimer</a>
-              
+                    <td>
+                      <button class="favorite styled" data-toggle="modal" data-target="#myModal2" type="button"  > Nutritionniste    </button>
+          
+                
+              <div class="modal" id="myModal2">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                  
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                      <h4 class="modal-title">Patient Details</h4>
+                      <button type="button" class="close" data-dismiss="modal2">&times;</button>
+                    </div>
+                    
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                      <form #formDirective [formGroup]="formnut" (ngSubmit)="onSubmitnut(patient.email,formnut.value)" novalidate>
+                        <div class="row">
+                          
+                          
+                          
+                         
+                          <div class="col-lg-4">
+                            <div class="form-group">
+                              <label class="form-control-label" for="input-country">Activité physique</label>
+                              <input type="text"  class="form-control form-control-alternative" placeholder="Activité"  formControlName="Activite">
+                            </div>
+                          </div>
+                          <div class="col-lg-4">
+                            <div class="form-group">
+                              <label class="form-control-label" for="input-country">Tabac</label>
+                              <select  formControlName="Tabac" class="form-control"  style="min-width: 100px;"> 
+                                <option value="">--Tabac--</option>
+                                <option value="Oui">Oui</option>
+                                <option value="Non">Non</option>
+                                </select>                </div>
+                              </div>
+                              <div class="col-lg-4">
+                                <div class="form-group">
+                                  <label class="form-control-label" for="input-country">diabète</label>
+                                  <input type="text"  class="form-control form-control-alternative" placeholder="diabète"  formControlName="diabete">
+                                </div>
+                              </div>
+                              <div class="col-lg-4">
+                                <div class="form-group">
+                                  <label class="form-control-label" for="input-country">Consulation antérieur</label>
+                                  <select  formControlName="Consultation" class="form-control"  style="min-width: 100px;"> 
+                                    <option value="">--Consultation--</option>
+                                    <option value="Oui">Oui</option>
+                                    <option value="Non">Non</option>
+                                    </select>                </div>
+                                  </div>
+                              <div class="col-lg-4">
+                                <div class="form-group">
+                                  <label class="form-control-label" for="input-country">Régimes suivis</label>
+                                  <input type="text"  class="form-control form-control-alternative" placeholder="Régime"  formControlName="Regime">
+                                </div>
+                              </div>
+                          
+                      
+                       
+                        
+                      
+                      <div class="col-lg-4">
+                        <div class="form-group">
+                          <label class="form-control-label" for="input-country">Heures Régulieres</label>
+                          <select  formControlName="Reguliere" class="form-control"  style="min-width: 100px;"> 
+                            <option value="">Reguliere</option>
+                            <option value="Oui">Oui</option>
+                            <option value="Non">Non</option>
+                            </select>                </div>
+                          </div>
+                          <div class="col-lg-4">
+                            <div class="form-group">
+                              <label class="form-control-label" for="input-country">Alimentation equilibré</label>
+                              <select  formControlName="Alimentation" class="form-control"  style="min-width: 100px;"> 
+                                <option value="">Alimentation</option>
+                                <option value="Oui">Oui</option>
+                                <option value="Non">Non</option>
+                                </select>                </div>
+                              </div>
+                              <div class="col-lg-4">
+                                <div class="form-group">
+                                  <label class="form-control-label" for="input-country">Hydratation adéquate</label>
+                                  <select  formControlName="Hydratation" class="form-control"  style="min-width: 100px;"> 
+                                    <option value="">Hydratation</option>
+                                    <option value="Oui">Oui</option>
+                                    <option value="Non">Non</option>
+                                    </select>            
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-4">
+                                    <div class="form-group">
+                                      <label class="form-control-label" for="input-country">Obésité classe</label>
+                                      <input type="text" class="form-control form-control-alternative" placeholder="Obésité"  formControlName="Obesite">
+                                    </div>
+                                  </div>
+                                  <div class="col-lg-4">
+                                    <div class="form-group">
+                                      <label class="form-control-label" for="input-country">Pds estime post chx</label>
+                                      <input type="text" class="form-control form-control-alternative" placeholder="Pds"  formControlName="Pds">
+                                    </div>
+                                  </div>
+
+                                  <div class="col-lg-8">
+                                    <div class="form-group">
+                                      <label class="form-control-label" for="input-country">Note</label>
+                                      <textarea class="form-control form-control-alternative" placeholder="Note..." rows="2" cols="3" formControlName="note"></textarea>
+                                    </div>
+                                  </div>
+
+
+
+                                </div>
+                        <button type="submit" class="btn btn-info" style="margin-left:10%;"  [disabled]="!formnut.valid">Envoyer</button>
+                                  </form>
+                    </div>
+                    
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                    
                   </div>
                 </div>
+              </div>
+            </td>
+              <td><button class="favorite styled" data-toggle="modal" data-target="#myModal3"
+                type="button">
+                Cardiologue 
+        </button>
+        <div class="modal" id="myModal3">
+          <div class="modal-dialog">
+            <div class="modal-content">
+            
+              <!-- Modal Header -->
+              <div class="modal-header">
+                <h2 class="modal-title">Evaluation cardiologique</h2>
+                <button type="button" class="close" data-dismiss="modal3">&times;</button>
+              </div>
+              
+              <!-- Modal body -->
+              <div class="modal-body">
+                <form #formDirective [formGroup]="formcard" (ngSubmit)="onSubmitcard(patient.email,formcard.value)" novalidate>
+                  <div class="row">
+                    
+                    
+                    
+                   
+                    <div class="col-lg-8">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-country">Avez-vous déjà été hospitalisé pour un problème quelconque ?</label>
+                        <input type="text"  class="form-control form-control-alternative" placeholder="hospitalise"  formControlName="hospitalise">
+                      </div>
+                    </div>
+                    <br>
+                    <div class="col-lg-8">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-country">accident vasculaire cérébral ?</label>
+                        <select  formControlName="accident" class="form-control"  style="min-width: 100px;"> 
+                          
+                          <option value="Oui">Oui</option>
+                          <option value="Non">Non</option>
+                          </select>                </div>
+                        </div>
+                        <div class="col-lg-8">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-country">problèmes cardiaques ou
+                              vasculaires dans la famille</label>
+                            <input type="text"  class="form-control form-control-alternative" placeholder="problème"  formControlName="prob">
+                          </div>
+                        </div>
+                        <div class="col-lg-8">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-country">Avez-vous des anomalies du bilan du cholestérol ou des triglycérides</label>
+                            <select  formControlName="anomalie" class="form-control"  style="min-width: 100px;"> 
+                              <option value="">--anomalies--</option>
+                              <option value="Oui">Oui</option>
+                              <option value="Non">Non</option>
+                              </select>                </div>
+                            </div>
+                        <div class="col-lg-10">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-country">Quel traitement suivez-vous actuellement</label>
+                            <input type="text"  class="form-control form-control-alternative" placeholder="traitement"  formControlName="traitement">
+                          </div>
+                        </div>
+                    
+                
+                 
+                  
+                
+               
+                   
+                            <div class="col-lg-8">
+                              <div class="form-group">
+                                <label class="form-control-label" for="input-country">Avez-vous déjà ressenti dans le passé un mauvais symptômes :</label>
+                                <input type="text" class="form-control form-control-alternative" placeholder="symptômes"  formControlName="symptome">
+                              </div>
+                            </div>
+                            
+      
+                            <div class="col-lg-10">
+                              <div class="form-group">
+                                <label class="form-control-label" for="input-country">Note</label>
+                                <textarea class="form-control form-control-alternative" placeholder="Note..." rows="2" cols="3" formControlName="note"></textarea>
+                              </div>
+                            </div>
+      
+      
+      
+                          </div>
+                  <button type="submit" class="btn btn-info" style="margin-left:10%;"  [disabled]="!formcard.valid">Envoyer</button>
+                            </form>
+              </div>
+              
+              <!-- Modal footer -->
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </td>
+        <td><button class="favorite styled" data-toggle="modal" data-target="#myModal4"
+          type="button">
+          Psychologue
+  </button>
+  <div class="modal" id="myModal4">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h2 class="modal-title">Evaluation Psychologique</h2>
+          <button type="button" class="close" data-dismiss="modal4">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+          <form #formDirective [formGroup]="formpsy" (ngSubmit)="onSubmitpsy(patient.email,formpsy.value)" novalidate>
+            <div class="row">
+            
+              <br>
+              <div class="col-lg-8">
+                <div class="form-group">
+                  <label class="form-control-label" for="input-country">Trouble Psychiatriques ?</label>
+                  <select  formControlName="trouble" class="form-control"  style="min-width: 100px;"> 
+                    
+                    <option value="Oui">Oui</option>
+                    <option value="Non">Non</option>
+                    </select>                </div>
+                  </div>
+                  
+                  <div class="col-lg-8">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-country">Addictions (alcool,toxico-dependance)</label>
+                      <select  formControlName="addictions" class="form-control"  style="min-width: 100px;"> 
+                        <option value="">--addiction--</option>
+                        <option value="Oui">Oui</option>
+                        <option value="Non">Non</option>
+                        </select>                </div>
+                      </div>
+                  <div class="col-lg-10">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-country">Difficultés vécues par le passé</label>
+                      <input type="text"  class="form-control form-control-alternative" placeholder="Difficultés"  formControlName="difficultes">
+                    </div>
+                  </div>
+              
+                      <div class="col-lg-10">
+                        <div class="form-group">
+                          <label class="form-control-label" for="input-country">Autre</label>
+                          <textarea class="form-control form-control-alternative" placeholder="Autre..." rows="2" cols="3" formControlName="note"></textarea>
+                        </div>
+                      </div>
+
+
+
+                    </div>
+            <button type="submit" class="btn btn-info" style="margin-left:10%;"  [disabled]="!formpsy.valid">Envoyer</button>
+                      </form>
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</td>
+  <td><button class="favorite styled"
+    type="button">
+Completer
+</button>
+
+              </td>
+              <td> <button nbButton outline status="success" (click)="consulter(patient.email)" class="btn btn-info">Consulter</button></td>
+             
+              <td class="text-right">
+            
+                <i class="fas fa-trash-alt" (click)="delete(patient.id)"></i>
+                    
+              
               </td>
             </tr>
             
@@ -297,7 +592,76 @@
     </div>
   </div>
 </div>
-<br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br>
+<div class="row">
+  <div class="col">
+    <div class="card shadow">
+      <div class="card-header border-0">
+        <h3 class="mb-0">Patients Operable</h3>
+      </div>
+      <div class="col text-right">
+        <div class="container">
+          
+            
+          </div>
+      </div>
+      <br>
+      <div class="table-responsive">
+        <table class="table align-items-center table-flush">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">Num</th>
+              <th scope="col">Nom Prenom</th>
+              
+             
+              
+              
+              <th scope="col">Details</th> 
+             
+              <th scope="col">Fiche Patient</th> 
+              <th scope="col">action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let patient of Patientsop$ | async">
+              
+              <td>
+                {{ patient.id}}
+              </td>
+              <td>
+              {{ patient.nom }}&nbsp;{{ patient.prenom }}
+              </td>
+              
+                  
+                   
+                   
+                  <td>
+                  
+                     <!-- -->
+                     <a href="https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffitness.body.read%20%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffitness.activity.read%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffitness.heart_rate.read%20%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.me%20profile%20email%20openid&state=%7B%7D&response_type=code&client_id={{patient.patientid}}&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fsteps"><button (click)="postid(patient.email)"><i class="fas fa-plus"></i></button></a>
+
+                   <!--<a href="https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffitness.body.read%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffitness.activity.read%20%20profile%20email%20openid&state=%7B%7D&response_type=code&client_id=422378604665-gvfnd9e6gm73nci5gpmpr0iih8ksut3n.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fsteps">View</a> --> 
+                    </td>
+                   
+       
+
+              <td> <button nbButton outline status="success" (click)="consulter(patient.email)" class="btn btn-info">Consulter</button></td>
+             
+              <td class="text-right">
+            
+                <i class="fas fa-trash-alt" (click)="delete(patient.id)"></i>
+                    
+              
+              </td>
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<br><br><br><br><br>
 </div>
 <div class="container-fluid">
     <app-footer></app-footer>

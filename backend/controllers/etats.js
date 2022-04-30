@@ -4,7 +4,7 @@ const Etat = require('../models/etat');
 
 exports.fetchAll = async (req, res, next) => {
   try {
-    const [allEtats] = await Etat.fetchAll(req.params.id);
+    const [allEtats] = await Etat.fetchAll(req.params.email);
     res.status(200).json(allEtats);
   } catch (err) {
     if (!err.statusCode) {
@@ -13,6 +13,18 @@ exports.fetchAll = async (req, res, next) => {
     next(err);
   }
 };
+exports.fetchlast = async (req, res, next) => {
+  try {
+    const [allEtats] = await Etat.fetchlast(req.params.id);
+    res.status(200).json(allEtats);
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500;
+    }
+    next(err);
+  }
+};
+
 
 exports.postEtat = async (req, res, next) => {
   const errors = validationResult(req);
@@ -28,6 +40,7 @@ exports.postEtat = async (req, res, next) => {
  
   const douleur = req.body.douleur;
   const niveau = req.body.niveau;
+  const note = req.body.note;
   const username = req.body.username;
 
   try {
@@ -40,6 +53,7 @@ exports.postEtat = async (req, res, next) => {
       medicament : medicament,
       douleur : douleur,
       niveau : niveau,
+      note : note,
       username: username,
     };
     const result = await Etat.save(etatdetails);

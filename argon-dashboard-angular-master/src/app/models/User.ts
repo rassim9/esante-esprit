@@ -10,4 +10,5 @@ export interface User {
     tel:string;
     sexe:string;
     adresse:string;
+    profession:string;
 }

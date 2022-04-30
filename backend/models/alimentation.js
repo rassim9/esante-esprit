@@ -12,11 +12,11 @@ module.exports = class Alimentation {
   }
 
  
-  static fetchmy(id) {
-    return db.execute('SELECT * FROM alimentation WHERE qte = ?',[id]);
+  static fetchmy(email) {
+    return db.execute('SELECT * FROM alimentation WHERE email = ?',[email]);
   }
   static fetchmyalimentation(email) {
-    return db.execute('SELECT * FROM alimentation WHERE patient = ?',[email]);
+    return db.execute('SELECT * FROM alimentation WHERE email = ?',[email]);
   }
 
   static save(alimentation) {

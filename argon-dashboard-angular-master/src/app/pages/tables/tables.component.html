@@ -143,7 +143,86 @@
                 
             </div>
         </div>
+        <hr>
+<h2 *ngFor="let nut of nut$ | async">Nutritionniste :{{ nut.medecin }}</h2>
+        <div class="panel-body bio-graph-info" *ngFor="let nut of nut$ | async">  
+               
+          <div class="row"  style="color: black;"  >
+              
+              <div class="bio-row">
+                  <p><span><b>Activité :</b> </span> {{ nut.Activite }}</p>
+              </div>
+              <div class="bio-row">
+                  <p><span><b>Tabac :</b> </span> {{ nut.Tabac }}</p>
+              </div>
+              <div class="bio-row">
+                  <p><span><b>diabète :</b></span>{{ nut.diabete }}</p>
+              </div>
+              <div class="bio-row">
+                  <p><span><b>Consultation :</b> </span>{{ nut.Consultation }}</p>
+              </div>
+              <div class="bio-row">
+                  <p><span><b>Régime :</b> </span>{{ nut.Regime }}</p>
+              </div>
+              <div class="bio-row">
+                  <p><span><b>Reguliere :</b></span>{{ nut.Reguliere }}</p>
+              </div>
+              <div class="bio-row">
+                  <p><span><b>Alimentation :</b> </span>{{ nut.Alimentation }}</p>
+              </div>
+              <div class="bio-row">
+                <p><span><b>Hydratation :</b> </span>{{ nut.Hydratation }}</p>
+            </div>
+            <div class="bio-row">
+              <p><span><b>Obesite :</b> </span>{{ nut.Obesite }}</p>
+          </div>
+          <div class="bio-row">
+            <p><span><b>Poids :</b> </span>{{ nut.Pds }}</p>
+        </div>
+        <div class="bio-row">
+          <p><span><b>Note :</b> </span>{{ nut.note }}</p>
+      </div>
+          </div>
+      </div>
+       
     </div>
+    <hr>
+
+    <h2 *ngFor="let card of card$ | async">Cardiologue :{{ card.medecin }}</h2>
+    <div class="panel-body bio-graph-info" *ngFor="let card of card$ | async">  
+           
+      <div class="row"  style="color: black;"  >
+          
+          <div class="bio-row">
+              <p><span><b>Déjà hospitalisé :</b> </span> {{ card.hospitalise }}</p>
+          </div>
+          <div class="bio-row">
+              <p><span><b>Accident vasculaire cérébral :</b> </span> {{ card.accident }}</p>
+          </div>
+          <div class="bio-row">
+              <p><span><b>Problèmes cardiaques ou
+                vasculaires :</b></span>{{ card.prob }}</p>
+          </div>
+          <div class="bio-row">
+              <p><span><b>Anomalies du bilan du cholestérol ou des triglycérides :</b> </span>{{ card.anomalie }}</p>
+          </div>
+          <div class="bio-row">
+              <p><span><b>Traitement :</b> </span>{{ card.traitement }}</p>
+          </div>
+          <div class="bio-row">
+              <p><span><b> Symptômes :</b></span>{{ card.symptome }}</p>
+          </div>
+          
+     
+    <div class="bio-row">
+      <p><span><b>Note :</b> </span>{{ card.note }}</p>
+  </div>
+      </div>
+  </div>
+   
+
+<hr>
+
   </div>
   </div>
 
@@ -151,107 +230,84 @@
   <!-- second table -->
 
   
-  <div class="row mt-5">
-    <div class="col">
-      <div class="card bg-default shadow">
-        <div class="card-header bg-transparent border-0">
-          <h3 class="text-white mb-0">Tableau de Données (Capturés par les objets connectées)</h3>
-        </div>
-        <div class="table-responsive">
-          <table class="table align-items-center table-dark table-flush">
-            <thead class="thead-dark">
-             
-            <tr>
-                <th scope="col">Poids</th>
-                
-                  <td *ngFor="let poids of poids$ | async">
-                    {{ poids.valeur }}
-                    </td>
-                 
-                
-              </tr>
-            <tr> 
-                <th scope="col">Pas</th>
-                
-                
-                  <td *ngFor="let pas of pas$ | async">
-                    {{ pas.valeur }}
-                    </td>
-                   
-              </tr>
-            <tr>
-                <th scope="col">Calories</th>
-               
-                  <td *ngFor="let Calories of calories$ | async ">
-                    {{ Calories.valeur }}
-                    </td>
-                
-              </tr>
-              <tr>
-                <th scope="col">Active Minutes</th>
-               
-                  <td *ngFor="let active of active$ | async ">
-                    {{ active.valeur }}
-                    </td>
-                
-              </tr>
-              <tr>
-                <th scope="col">Heart Minutes</th>
-               
-                  <td *ngFor="let heart of heartmin$ | async ">
-                    {{ heart.valeur }}
-                    </td>
-                
-              </tr>
-              <tr>
-                <th scope="col">BPM</th>
-               
-                  <td *ngFor="let heart of heartbpm$ | async ">
-                    {{ heart.valeur }}
-                    </td>
-                
-              </tr>
-               </thead>   
-                
-                
-              
-            
-            <tbody>
-              
-              
-              
-              
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
+  
 
 </div>
 </div>
-  <div class="chart-wrapper">
-    <canvas baseChart 
-        [datasets]="lineChartData" 
-        [labels]="lineChartLabels" 
-        [options]="lineChartOptions"
-        [colors]="lineChartColors" 
-        [legend]="lineChartLegend" 
-        [chartType]="lineChartType" 
-        [plugins]="lineChartPlugins">
-    </canvas>
-</div>
+ 
 
-<br><br>
 
 
 
 
 <div style="opacity: 1; background-repeat: no-repeat;background-size: cover;" [ngStyle]="{backgroundImage:'url(./assets/img/med4.jpg)'}" >
+ 
+  <div class="col-xl-12 order-xl-1">
+    <div class="card bg-secondary shadow">
+      <div class="card-header bg-white border-0">
+        <div class="row align-items-center">
+          <div class="col-8">
+            <h3 class="mb-0">Decision Medecin</h3>
+          </div>
+          <div class="col-4 text-right">
+          </div>
+        </div>
+      </div>
+<br>
+      Le patient n'est éligible pour l'operation <button  class="btn btn-primary" style="width:120px;margin-left: 40%;" (click)="postid()">Confirmer</button>
+ <hr>
+  <div class="card-body" >
+    <form #formDirective [formGroup]="formop" (ngSubmit)="onSubmitop(formop.value)" novalidate>
+      <h6 class="heading-small text-muted mb-4">Operation details</h6>
+      <div class="pl-lg-4">
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="form-group">
+              <label class="form-control-label" for="input-country">Date d'intervention</label>
+              <input type="date"  class="form-control form-control-alternative" placeholder="type"  formControlName="date">
+            </div>
+          </div>
+          <div class="col-lg-8">
+            <div class="form-group">
+              <label class="form-control-label" for="input-country">Heure d'intervention</label>
+              <input type="datetime"  class="form-control form-control-alternative" placeholder="heure"  formControlName="heure">
+            </div>
+          </div>
+          <div class="col-lg-8">
+            <div class="form-group">
+              <label class="form-control-label" for="input-country">Etablissment</label>
+              <input type="text"  class="form-control form-control-alternative" placeholder="etablissement"  formControlName="etablissement">
+            </div>
+          </div>
+          <div class="col-lg-8">
+            <div class="form-group">
+              <label class="form-control-label" for="input-country">Précautions</label>
+              <input type="text"  class="form-control form-control-alternative" placeholder="precautions"  formControlName="precautions">
+            </div>
+          </div>
+          <div class="col-lg-8">
+            <div class="form-group">
+              <label class="form-control-label" for="input-country">Note</label>
+              <textarea class="form-control form-control-alternative" placeholder="Note..." rows="2" cols="3" formControlName="note"></textarea>
+            </div>
+          </div>
+        
+        
+          
+        </div>
+      </div>
+      <button type="submit" class="btn btn-info" style="margin-left:80%;"  [disabled]="!formop.valid">Confirmer</button>
+
+    </form>
+  </div>
+</div>
+</div>
+
+
 
   <br><br>
 
-    <!-- Table -->
+    <!-- Table 
     <div class="row">
       <div class="col">
         <div class="card shadow">
@@ -260,23 +316,23 @@
           </div>
           <div class="container" class="col text-right">
 
-            <!-- Button to Open the Modal -->
+           
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
               Ajouter Medicament
             </button>
           
-            <!-- The Modal -->
+           
             <div class="modal" id="myModal">
               <div class="modal-dialog">
                 <div class="modal-content">
                 
-                  <!-- Modal Header -->
+                
                   <div class="modal-header">
                     <h4 class="modal-title">Medicament Details</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                   </div>
                   
-                  <!-- Modal body -->
+                
                   <div class="modal-body">
                     <form #formDirective [formGroup]="form" (ngSubmit)="onSubmit(form.value)" novalidate>
                       <div class="row">
@@ -313,7 +369,7 @@
                                 </form>
                   </div>
                   
-                  <!-- Modal footer -->
+                  
                   <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                   </div>
@@ -442,7 +498,7 @@
     <br><br>
     <br><br><br><br>
 
-</div>
+</div>-->
 
 <div class="container-fluid">
   <app-footer></app-footer>

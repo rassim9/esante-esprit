@@ -22,8 +22,8 @@ export class MedicamentService {
 
   
   fetchAllmedicament():Observable<Medicament[]> {
-    const id =localStorage.getItem('id patient');
-    const url = `http://localhost:3000/medicament/my/${id}`;
+    const email =localStorage.getItem('email patient');
+    const url = `http://localhost:3000/medicament/my/${email}`;
     return this.http
     .get<Medicament[]>(url, { responseType: "json" })
     .pipe(tap((_) => console.log("fetched Medicament")),
@@ -43,6 +43,7 @@ export class MedicamentService {
   createmedicament(formData: Partial<Medicament>): Observable<Medicament>{
     const id =localStorage.getItem('id patient');
     const email =localStorage.getItem('email patient');
+    console.log(email);
     return this.http
     .post<Medicament>(this.url, { nom: formData.nom, dosage: formData.dosage,duree: formData.duree,autre: formData.autre,patient: id,email:email }, this.httpOptions)
     .pipe(

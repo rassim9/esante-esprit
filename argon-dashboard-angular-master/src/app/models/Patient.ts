@@ -9,13 +9,20 @@ export interface Patient {
     age:string;
     poids:string;
     taille:string;
-    periode:string;
-    etat:string;
+    type:string;
+    rpps:string;
     imc:string;
     classe:string;
     img:string;
     classeimg;
     medecin:string;
     dateint:Date;
+    Nutritionniste:string;
+    Psychologue:string;
+    Cardiologue:string;
+    Soignant:string;
+    autre:string;
+    operable:string;
+
 
 }

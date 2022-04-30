@@ -25,7 +25,7 @@ router.post(
     body('password').trim().isLength({ min: 7 }),
     body('taille'),
     body('poids'),
-    body('date'),
+    body('age'),
     body('role'),
     body('tel'),
     body('sexe'),
@@ -50,7 +50,9 @@ router.post(
       .normalizeEmail(),
     body('password').trim().isLength({ min: 7 }),
    
-    body('role')
+    body('role'),
+    body('profession')
+
   ],
   authController.signupm
 );

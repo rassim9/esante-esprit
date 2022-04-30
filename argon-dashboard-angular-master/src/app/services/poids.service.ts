@@ -26,6 +26,16 @@ export class PoidsService {
     catchError(this.errorHandlerService.handleError<Poids[]>("fetchAll", []))
     );
   }
+  fetchmy():Observable<Poids[]> {
+    const email =localStorage.getItem('email');
+    const url = `http://localhost:3000/poids/${email}`
+    return this.http
+    .get<Poids[]>(this.url, { responseType: "json"})
+    .pipe(tap((_) => console.log("fetched Poids")),
+    catchError(this.errorHandlerService.handleError<Poids[]>("fetchAll", []))
+    );
+  }
+
 
 
   

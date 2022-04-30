@@ -6,7 +6,7 @@ const Medicament = require('../models/medicament');
 
 exports.fetchmy = async (req, res, next) => {
   try {
-    const [allMedicament] = await Medicament.fetchmy(req.params.id);
+    const [allMedicament] = await Medicament.fetchmy(req.params.email);
     res.status(200).json(allMedicament);
   } catch (err) {
     if (!err.statusCode) {

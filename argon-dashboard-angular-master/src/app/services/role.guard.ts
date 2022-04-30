@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class RoleGuard implements CanActivate {
   canActivate(){
     let Role = localStorage.getItem("role");
-    if (Role == "medecin" || Role=="admin") {
+    if (Role == "Medecin" || Role=="admin") {
       return true;
     }
     alert("Pour les medecins seulement");

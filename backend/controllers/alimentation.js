@@ -1,13 +1,13 @@
 const { validationResult } = require('express-validator');
 
-const Alimentation = require('../models/alimentaion');
+const Alimentation = require('../models/alimentation');
 
 
 
 exports.fetchmy = async (req, res, next) => {
   try {
-    const [allAlimentaion] = await Alimentaion.fetchmy(req.params.id);
-    res.status(200).json(allAlimentaion);
+    const [allAlimentation] = await Alimentation.fetchmy(req.params.email);
+    res.status(200).json(allAlimentation);
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
@@ -15,10 +15,10 @@ exports.fetchmy = async (req, res, next) => {
     next(err);
   }
 };
-exports.fetchmyAlimentaion = async (req, res, next) => {
+exports.fetchmyAlimentation = async (req, res, next) => {
   try {
-    const [allAlimentaion] = await Alimentaion.fetchmyAlimentaion(req.params.email);
-    res.status(200).json(allAlimentaion);
+    const [allAlimentation] = await Alimentation.fetchmyAlimentation(req.params.email);
+    res.status(200).json(allAlimentation);
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
@@ -27,7 +27,7 @@ exports.fetchmyAlimentaion = async (req, res, next) => {
   }
 };
 
-exports.postAlimentaion = async (req, res, next) => {
+exports.postAlimentation = async (req, res, next) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) return;
@@ -40,7 +40,7 @@ exports.postAlimentaion = async (req, res, next) => {
   const email = req.body.email;
  
   try {
-    const Alimentaiondetails = {
+    const Alimentationdetails = {
       deb: deb,
       fin: fin,
       heure: heure,
@@ -50,7 +50,7 @@ exports.postAlimentaion = async (req, res, next) => {
      
     };
    
-    const result = await Alimentaion.save(Alimentaiondetails);
+    const result = await Alimentation.save(Alimentationdetails);
     res.status(201).json({ message: 'Posted!' });
   } catch (err) {
     if (!err.statusCode) {
@@ -60,9 +60,9 @@ exports.postAlimentaion = async (req, res, next) => {
   }
 };
 
-exports.deleteAlimentaion = async (req, res, next) => {
+exports.deleteAlimentation = async (req, res, next) => {
   try {
-    const deleteResponse = await Alimentaion.delete(req.params.id);
+    const deleteResponse = await Alimentation.delete(req.params.id);
     res.status(200).json(deleteResponse);
   } catch (err) {
     if (!err.statusCode) {

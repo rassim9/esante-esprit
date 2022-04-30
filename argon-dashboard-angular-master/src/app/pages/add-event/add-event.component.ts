@@ -6,6 +6,11 @@ import { RdvService } from '../../services/rdv.service';
 import { Rdv } from 'src/app/models/Rdv';
 import { Observable } from 'rxjs';
 import { FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
+import { User } from 'src/app/models/User';
+import { Patient } from 'src/app/models/Patient';
+import { PatientService} from 'src/app/services/patient.service';
+
+
 
 
 @Component({
@@ -17,10 +22,12 @@ export class AddEventComponent implements OnInit {
 
   rdv$: Observable<Rdv[]>;
   form: FormGroup ;
+  Patients$: Observable<Patient[]>;
 
-  constructor(private rdvService: RdvService,private router: Router ) { }
+  constructor(private rdvService: RdvService,private router: Router,private PatientService: PatientService ) { }
   ngOnInit():void {
     this.form = this.createFormGroup();
+    this.Patients$=this.fetchAll();
    
     }
 
@@ -43,7 +50,11 @@ export class AddEventComponent implements OnInit {
   create(): void {
 
     this.rdvService.createRdv(this.form.value).subscribe((msg) => console.log(msg));  }
-    
+ 
+    fetchAll(): Observable<Patient[]> {
+      return this.PatientService.fetchAllpatients();
+    }
+
 }
 
 

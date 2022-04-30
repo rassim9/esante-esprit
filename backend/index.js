@@ -1,15 +1,20 @@
 const express = require('express');
 const bodyParser =require('body-parser');
+const sgMail = require('@sendgrid/mail')
+
 
 const db = require('./util/database');
 const pesageRoutes=require('./routes/pesage');
 const poidsRoutes=require('./routes/poids');
 const pasRoutes=require('./routes/pas');
+const operationRoutes=require('./routes/operation');
+
 
 const patientRoutes=require('./routes/patient');
 const userRoutes=require('./routes/user');
 const rdvRoutes=require('./routes/rdv');
 const msgRoutes=require('./routes/message');
+
 
 const errorController =require ('./controllers/error') ;
 const authRoutes=require('./routes/auth');
@@ -19,6 +24,10 @@ const heartminRoutes=require('./routes/heartmin');
 const heartbpmRoutes=require('./routes/heartbpm');
 const caloriesRoutes=require('./routes/calories');
 const medicamentRoutes=require('./routes/medicament');
+const alimentationRoutes=require('./routes/alimentation');
+const nutritionnisteRoutes=require('./routes/nutritionniste');
+const cardiologueRoutes=require('./routes/cardiologue');
+const psyRoutes=require('./routes/psy');
 
 const { google } = require("googleapis");
 const request =require("request");
@@ -80,17 +89,18 @@ app.get("/steps", async(req, res) =>  {
   const code = queryParse.parse(queryURL.query).code;
   const id=cache.get('id');
   const secret=cache.get('secret');
+  const email=cache.get('email');
 const redirect="http://localhost:3000/steps";
   //console.log(code);
   var d1=Date.now();
-  console.log(d1);
+  //console.log(d1);
   var d = new Date();
 d.setUTCHours(0,0,0,0);
-console.log(+d);
+//console.log(+d);
 var tt=d1-d;
-console.log(tt);
+//console.log(tt);
 var w=d1-(tt+(86400000*6));
-console.log(w);
+//console.log(w);
  
 
   const oauth2Client = new google.auth.OAuth2(
@@ -180,7 +190,7 @@ for (const dataSet of stepArray){
              for (s of steps.value){
               
           console.log(s.intVal);
-        db.execute('INSERT INTO pas (valeur) VALUES (?)',[s.intVal] );
+        db.execute('INSERT INTO pas (valeur,email) VALUES (?,?)',[s.intVal,email] );
       }
     }
     else if(steps.dataTypeName==='com.google.weight.summary'){
@@ -188,7 +198,7 @@ for (const dataSet of stepArray){
              for (s of steps.value){
               
           console.log(s.fpVal.toFixed(2));
-        db.execute('INSERT INTO poids (valeur) VALUES (?)',[s.fpVal.toFixed(2)] );
+        db.execute('INSERT INTO poids (valeur,email) VALUES (?,?)',[s.fpVal.toFixed(2),email] );
       }
 
     }
@@ -196,7 +206,7 @@ for (const dataSet of stepArray){
       console.log(steps.dataTypeName)
              for (s of steps.value){
           console.log(s.fpVal.toFixed(2));
-      db.execute('INSERT INTO calories (valeur) VALUES (?)',[s.fpVal.toFixed(2)] );
+      db.execute('INSERT INTO calories (valeur,email) VALUES (?,?)',[s.fpVal.toFixed(2),email] );
       }
     }
     
@@ -270,16 +280,16 @@ for (const dataSet of stepArray){
 
 
 catch (e){
-  console.log();
+  console.log(); 
 }
-return res.redirect('http://localhost:4200/#/tables');
+return res.redirect('http://localhost:4200/#/dashboard2');
 
 });
 
 
    
   
-    
+
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -306,6 +316,11 @@ app.use('/calories', caloriesRoutes);
 app.use('/user', userRoutes);
 app.use('/patient', patientRoutes);
 app.use('/medicament', medicamentRoutes);
+app.use('/alimentation', alimentationRoutes);
+app.use('/nutritionniste', nutritionnisteRoutes);
+app.use('/cardiologue', cardiologueRoutes);
+app.use('/psy', psyRoutes);
+app.use('/operation', operationRoutes);
 
 
 app.use(errorController.get404);

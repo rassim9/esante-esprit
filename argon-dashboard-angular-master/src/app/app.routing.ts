@@ -9,6 +9,7 @@ import { LoginComponent } from 'src/app/pages/login/login.component';
 import { RegisterComponent } from 'src/app/pages/register/register.component';
 import { AuthGuard } from 'src/app/services/auth-guard.service';
 import { DashboardComponent } from 'src/app/pages/dashboard/dashboard.component';
+import { Dashboard2Component } from 'src/app/pages/dashboard2/dashboard2.component';
 import { IconsComponent } from 'src/app/pages/icons/icons.component';
 import { MapsComponent } from 'src/app/pages/maps/maps.component';
 import { UserProfileComponent } from 'src/app/pages/user-profile/user-profile.component';
@@ -35,6 +36,7 @@ const routes: Routes =[
     { path: 'boite',           component: BoiteComponent ,canActivate: [AuthGuard] },
     { path: 'faq',           component: FaqComponent ,canActivate: [AuthGuard] },
     { path: 'admin',           component: AdminComponent ,canActivate: [AuthGuard,RoleadminGuard] },
+    { path: 'dashboard2',           component: Dashboard2Component  },
     
 
     

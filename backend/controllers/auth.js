@@ -20,6 +20,7 @@ exports.signup = async (req, res, next) => {
   const tel = req.body.tel;
   const sexe = req.body.sexe;
   const adresse= req.body.adresse
+  const profession= req.body.profession
 
   try {
     const hashedPassword = await bcrypt.hash(password, 12);
@@ -34,7 +35,8 @@ exports.signup = async (req, res, next) => {
       role: role,
       tel: tel,
       sexe: sexe, 
-      adresse: adresse
+      adresse: adresse,
+      profession:profession
     };
 
     const result = await User.save(userDetails);
@@ -61,6 +63,7 @@ exports.signupm = async (req, res, next) => {
   const role = "Medecin";
   const tel = req.body.tel;
   const sexe = req.body.sexe;
+  const profession = req.body.profession;
 
   try {
     const hashedPassword = await bcrypt.hash(password, 12);
@@ -71,7 +74,8 @@ exports.signupm = async (req, res, next) => {
       password: hashedPassword,
       role: role,
       tel: tel, 
-      sexe: sexe
+      sexe: sexe,
+      profession: profession
     };
 
     const result = await User.savem(userDetails);

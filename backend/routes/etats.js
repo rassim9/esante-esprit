@@ -8,7 +8,8 @@ const etatsController = require('../controllers/etats');
 const auth = require('../middleware/auth');
 
 
-router.get('/:id',etatsController.fetchAll)
+router.get('/:email',etatsController.fetchAll)
+router.get('/3/:id',etatsController.fetchlast)
 
 router.post(
   '/',
@@ -22,6 +23,7 @@ router.post(
     body('medicament'),
     body('douleur'),
     body('niveau'),
+    body('note'),
     body('username').trim().not().isEmpty(),
   ],
   etatsController.postEtat

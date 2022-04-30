@@ -12,8 +12,8 @@ module.exports = class Medicament {
   }
 
  
-  static fetchmy(id) {
-    return db.execute('SELECT * FROM medicament WHERE patient = ?',[id]);
+  static fetchmy(email) {
+    return db.execute('SELECT * FROM medicament WHERE email = ?',[email]);
   }
   static fetchmymedicament(email) {
     return db.execute('SELECT * FROM medicament WHERE email = ?',[email]);

@@ -10,7 +10,7 @@ module.exports = class Rdv {
   }
 
   static fetchAll(id) {
-    return db.execute('SELECT title,date FROM rdv WHERE p1 = ?', [id]);
+    return db.execute('SELECT title,date FROM rdv WHERE p1 = ? OR p2= ?', [id,id]);
   }
 
   static fetchAllpatient(id) {

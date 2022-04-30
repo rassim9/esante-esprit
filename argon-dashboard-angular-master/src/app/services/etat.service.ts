@@ -8,6 +8,7 @@ import { BehaviorSubject, Observable } from "rxjs";
 
 import { ErrorHandlerService } from './error-handler.service';
 import { $ } from 'protractor';
+import { clear } from 'console';
 
 
 @Injectable({
@@ -24,8 +25,8 @@ export class EtatService {
  
 
   fetchAll():Observable<Etat[]> {
-    const id =localStorage.getItem('id');
-    const url = `http://localhost:3000/etats/${id}`;
+    const email =localStorage.getItem('email patient');
+    const url = `http://localhost:3000/etats/${email}`;
     return this.http
     .get<Etat[]>(url, { responseType: "json" })
     .pipe(tap((_) => console.log("fetched etats")),
@@ -34,7 +35,7 @@ export class EtatService {
   }
 
   createEtat(formData: Partial<Etat>): Observable<Etat>{
-    const id =localStorage.getItem('id');
+    const email =localStorage.getItem('email');
     var temp="37";
      temp =localStorage.getItem('temp');
     var pansement="non";
@@ -79,11 +80,37 @@ export class EtatService {
      localStorage.removeItem("saignment");
      localStorage.removeItem("douleur");
 
+    var note=0;
+    var ntemp=0;
+    var npansement=0;
+    var nmedic=0;
+    var nsaignment=0;
+    var ndouleur=0;
+    var nniveau=0;
+   
+    if (parseInt(temp)>39||parseInt(temp)<36){ntemp=2} 
+    else if((parseInt(temp)==39)  || (parseInt(temp)==38)|| (parseInt(temp)==36)){ntemp=5}
+    else if(parseInt(temp)==37)  {ntemp=10}
+    if (pansement=="oui"){npansement=10}
+    else if(pansement=="non"){npansement=5}
+    if (medicament=="oui"){nmedic=10}
+    else if(medicament=="non"){nmedic=5}
+    if (saignment=="oui"){nsaignment=5}
+    else if(saignment=="non"){nsaignment=10}
+    if (douleur=="oui"){ndouleur=5}
+    else if(douleur=="non"){ndouleur=10}
+    if((parseInt(niveau)==8)  || (parseInt(niveau)==7) || (parseInt(niveau)==6)){nniveau=3}
+    else if((parseInt(niveau)==5)  || (parseInt(niveau)==4) || (parseInt(niveau)==3)){nniveau=5}
+    else if((parseInt(niveau)==2)  || (parseInt(niveau)==1) || (parseInt(niveau)==0)){nniveau=10}
 
-
+    note=(ntemp+npansement+nmedic+nsaignment+ndouleur+nniveau)/6
+    console.log('douleur:',ndouleur); console.log('medic:',nmedic); console.log('npans:',npansement); console.log('sai:',nsaignment); console.log('ntemp:',ntemp);
+    console.log('nniv:',nniveau);
+    console.log('note:',note);
+    localStorage.removeItem(temp);localStorage.removeItem(pansement);localStorage.removeItem(saignment);localStorage.removeItem(medicament);localStorage.removeItem(douleur);localStorage.removeItem(niveau);
     return this.http
 
-    .post<Etat>(this.url, { forme: formData.forme, description: formData.description,temp:temp,pansement:pansement,saignment:saignment,medicament:medicament,douleur:douleur,niveau:niveau, username: id}, this.httpOptions)
+    .post<Etat>(this.url, { forme: formData.forme, description: formData.description,temp:temp,pansement:pansement,saignment:saignment,medicament:medicament,douleur:douleur,niveau:niveau,note:note, username: email}, this.httpOptions)
     .pipe(
       catchError(this.errorHandlerService.handleError<Etat>("createEtat"))
          

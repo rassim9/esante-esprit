@@ -45,6 +45,8 @@ import { EmailComponent } from './pages/email/email.component';
 import { BoiteComponent } from './pages/boite/boite.component';
 import { FaqComponent } from './pages/faq/faq.component';
 import { AdminComponent } from './pages/admin/admin.component';
+import { Dashboard2Component } from './pages/dashboard2/dashboard2.component';
+
 FullCalendarModule.registerPlugins([ 
   dayGridPlugin,
   interactionPlugin
@@ -85,6 +87,7 @@ FullCalendarModule.registerPlugins([
     BoiteComponent,
     FaqComponent,
     AdminComponent,
+    Dashboard2Component,
     
   ],
   providers: [

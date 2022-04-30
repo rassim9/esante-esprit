@@ -1,7 +1,7 @@
 const db = require('../util/database');
 
 module.exports = class Patient {
-  constructor(email, patientid, secret,nom,prenom,sexe, age, poids, taille,periode, etat, dateint, imc,classe,img,classeimg,pideal,medecin) {
+  constructor(email, patientid, secret,nom,prenom,sexe, age, poids, taille,type,rpps, dateint, imc,classe,img,classeimg,pideal,medecin,Nutritionniste,Psychologue,Cardiologue,Soignant,autre) {
     this.email = email;
     this.patientid = patientid;
     this.secret = secret;
@@ -11,8 +11,8 @@ module.exports = class Patient {
     this.age=age;
     this.poids=poids;
     this.taille=taille;
-    this.periode = periode;
-    this.etat= etat;
+    this.type = type;
+    this.rpps= rpps;
     this.dateint= dateint;
     this.imc= imc;
     this.classe=classe;
@@ -20,20 +20,30 @@ module.exports = class Patient {
     this.classeimg=classeimg;
     this.pideal=pideal;
     this.medecin=medecin;
+    this.Nutritionniste=Nutritionniste;
+    this.Psychologue=Psychologue;
+    this.Cardiologue=Cardiologue;
+    this.Soignant=Soignant;
+    this.autre=autre;
   }
 
   static count() {
     return db.execute('SELECT COUNT(*) AS Count   FROM patients');
   }
-  static countp(id) {
-    return db.execute('SELECT COUNT(*) AS Count FROM patients WHERE medecin = ?',[id]);
+  static countp(email) {
+    return db.execute('SELECT COUNT(*) AS Count FROM patients WHERE medecin = ? OR Nutritionniste = ? OR Cardiologue = ? OR Soignant = ? OR autre = ?',[email,email,email,email,email]);
   }
-
-  static fetchAll(id) {
-    return db.execute('SELECT * FROM patients WHERE medecin = ?',[id]);
+  static fetchAllpatients() {
+    return db.execute('SELECT * FROM patients');
   }
-  static fetchmy(id) {
-    return db.execute('SELECT * FROM patients WHERE id = ?',[id]);
+  static fetchAll(email) {
+    return db.execute('SELECT * FROM patients WHERE medecin = ? OR Nutritionniste = ? OR Cardiologue = ? OR Soignant = ? OR autre = ?',[email,email,email,email,email]);
+  }
+  static fetchmy(email) {
+    return db.execute('SELECT * FROM patients WHERE email = ?',[email]);
+  }
+  static fetchop(email) {
+    return db.execute('SELECT * FROM patients WHERE email = ? AND operable = "oui" ',[email]);
   }
   static mydata(email) {
     return db.execute('SELECT * FROM patients WHERE email = ?',[email]);
@@ -41,8 +51,8 @@ module.exports = class Patient {
 
   static save(patient) {
     return db.execute(
-      'INSERT INTO patients (email, patientid, secret,nom, prenom, sexe, age, poids, taille,periode, etat, dateint, imc,classe  ,img, classeimg,pideal, medecin) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-      [patient.email, patient.patientid, patient.secret,patient.nom,patient.prenom,patient.sexe,patient.age,patient.poids,patient.taille, patient.periode, patient.etat, patient.dateint, patient.imc,patient.classe, patient.img,patient.classeimg,patient.pideal, patient.medecin]
+      'INSERT INTO patients (email, patientid, secret,nom, prenom, sexe, age, poids, taille,type, rpps, dateint, imc,classe  ,img, classeimg,pideal, medecin,Nutritionniste,Psychologue,Cardiologue,Soignant,autre) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?)',
+      [patient.email, patient.patientid, patient.secret,patient.nom,patient.prenom,patient.sexe,patient.age,patient.poids,patient.taille, patient.type, patient.rpps, patient.dateint, patient.imc,patient.classe, patient.img,patient.classeimg,patient.pideal, patient.medecin,patient.Nutritionniste,patient.Psychologue,patient.Cardiologue,patient.Soignant,patient.autre]
     );
   }
 
@@ -52,8 +62,12 @@ module.exports = class Patient {
     return db.execute('DELETE FROM patients WHERE id = ?', [id]);
   }
 
-  static postid(id) {
-    return db.execute('SELECT patientid,secret FROM patients WHERE id = ?', [id]);
+  static postid(email) {
+    return db.execute('SELECT patientid,secret FROM patients WHERE email = ?', [email]);
     
   }
+
+  static update(email,operable) {
+    return db.execute('UPDATE patients SET operable= ?  WHERE email= ?',[operable,email]);
+}
 };

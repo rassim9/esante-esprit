@@ -7,10 +7,14 @@
   <!-- Pages -->
   
 
-<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
-  <div class="container-fluid">
-    <div class="header-body">
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 500px; background-image: url(assets/img/tele.jpg); background-size: cover; background-position: center top;">
+  <div class="container-fluid ">
+    <div class="header-body" *ngFor="let data of mydata$ | async">
+      <h1 class="display-2 text-white" *ngFor="let user of users$| async ;">Bienvenue {{user.name}}</h1><br>
+    
+     <!-- <h3>Il vous reste {{ data.periode }}.. jours pour guérir..{{ date| date:'shortDate'-data.dateint | date:'shortDate' }}</h3>-->
       <!-- Card stats -->
+      <h2>Mes données</h2>
       <div class="row" *ngFor="let data of mydata$ | async">
         <div class="col-xl-3 col-lg-6">
           <div class="card card-stats mb-4 mb-xl-0">
@@ -18,7 +22,7 @@
               <div class="row">
                 <div class="col">
                   <h5 class="card-title text-uppercase text-muted mb-0">Poids Ideal</h5>
-                  <span class="h2 font-weight-bold mb-0">{{data.pideal}}</span>
+                  <span class="h2 font-weight-bold mb-0">{{data.pideal}}</span><br>&nbsp;
                 </div>
                 <div class="col-auto">
                   <div class="icon icon-shape bg-success text-white rounded-circle shadow">
@@ -26,10 +30,7 @@
                   </div>
                 </div>
               </div>
-              <p class="mt-3 mb-0 text-muted text-sm">
-                <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
-                <span class="text-nowrap">Since last month</span>
-              </p>
+              
             </div>
           </div>
         </div>
@@ -39,7 +40,7 @@
               <div class="row">
                 <div class="col">
                   <h5 class="card-title text-uppercase text-muted mb-0">IMC</h5>
-                  <span class="h2 font-weight-bold mb-0">{{data.imc}}</span>
+                  <span class="h2 font-weight-bold mb-0">{{data.imc}}</span><br>{{data.classe}}
                 </div>
                 <div class="col-auto">
                   <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
@@ -47,10 +48,7 @@
                   </div>
                 </div>
               </div>
-              <p class="mt-3 mb-0 text-muted text-sm">
-                <span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 3.48%</span>
-                <span class="text-nowrap">Since last week</span>
-              </p>
+             
             </div>
           </div>
         </div>
@@ -60,7 +58,7 @@
               <div class="row">
                 <div class="col">
                   <h5 class="card-title text-uppercase text-muted mb-0">IMG</h5>
-                  <span class="h2 font-weight-bold mb-0">{{data.img}}</span>
+                  <span class="h2 font-weight-bold mb-0">{{data.img}}</span><br>{{data.classeimg}}
                 </div>
                 <div class="col-auto">
                   <div class="icon icon-shape bg-info text-white rounded-circle shadow">
@@ -68,18 +66,24 @@
                   </div>
                 </div>
               </div>
-              <p class="mt-3 mb-0 text-muted text-sm">
-                <span class="text-warning mr-2"><i class="fas fa-arrow-down"></i> 1.10%</span>
-                <span class="text-nowrap">Since yesterday</span>
-              </p>
+             
             </div>
           </div>
         </div>
         
       </div>
-    </div>
-  </div>
+    </div> 
+     <div  *ngFor="let data of mydata$ | async">
+    
+     <br>  <a href="https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffitness.body.read%20%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffitness.activity.read%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffitness.heart_rate.read%20%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fplus.me%20profile%20email%20openid&state=%7B%7D&response_type=code&client_id={{data.patientid}}&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fsteps"><button class="btn btn-primary" (click)="postid()">Voir mes données recueillies</button></a><br><br>
 </div>
+<button class="btn btn-primary" [routerLink]="['/maps']">Comment vous sentez aujourd'hui ?</button>
+
+  </div>    
+
+</div>
+
+
 <div class="container-fluid mt--7">
   <div class="row">
     <div class="col-xl-8 mb-5 mb-xl-0">
@@ -88,7 +92,7 @@
           <div class="row align-items-center">
             <div class="col">
               <h6 class="text-uppercase text-light ls-1 mb-1">Overview</h6>
-              <h2 class="text-white mb-0">Sales value</h2>
+              <h2 class="text-white mb-0">Poids</h2>
             </div>
             <div class="col">
               <ul class="nav nav-pills justify-content-end">
@@ -112,26 +116,49 @@
           <!-- Chart -->
           <div class="chart">
             <!-- Chart wrapper -->
-            <canvas id="chart-sales" class="chart-canvas"></canvas>
+            <canvas baseChart id="chart-sales" class="chart-canvas"
+            [datasets]="lineChartData"
+            [labels]="lineChartLabels"
+            [options]="lineChartOptions"
+            [colors]="lineChartColors"
+            [legend]="lineChartLegend"
+            [chartType]="lineChartType"
+            [plugins]="lineChartPlugins"></canvas>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-xl-4">
+    <div class="col-xl-4 ">
       <div class="card shadow">
         <div class="card-header bg-transparent">
           <div class="row align-items-center">
             <div class="col">
               <h6 class="text-uppercase text-muted ls-1 mb-1"></h6>
-              <h2 class="mb-0">Performance</h2>
+              <h2 class="mb-0">Performance</h2><br>
+              <div *ngFor="let poids of poids$ | async; last as isLast" >
+              <h3 style="text-align: center;" *ngIf="isLast">Dernier poids enregistré <br>
+                {{ poids.date|date:'mediumDate' }}<h1>{{ poids.valeur }}</h1></h3>
             </div>
+              <hr>
+              <div *ngFor="let Calories of calories$ | async ;last as isLast" >
+                <h3 style="text-align: center;" *ngIf="isLast">Calories brulée <br>{{ Calories.date|date:'mediumDate' }}<h1>{{ Calories.valeur }}</h1></h3>
+              </div>
+              <hr>
+            </div>
+          </div>
+          <h2 class="mb-0">Operation</h2><br>
+          <div *ngFor="let operations of operations$ | async; last as isLast" >
+            <h3 style="text-align: center;" *ngIf="isLast">Date Operation <br>
+              <h2>{{ operations.date|date:'mediumDate' }}--{{ operations.heure }}</h2></h3><br>
+             
+
+
+
           </div>
         </div>
         <div class="card-body">
           <!-- Chart -->
-          <div class="chart">
-            <canvas id="chart-orders" class="chart-canvas"></canvas>
-          </div>
+         
         </div>
       </div>
     </div>
@@ -142,11 +169,9 @@
         <div class="card-header border-0">
           <div class="row align-items-center">
             <div class="col">
-              <h3 class="mb-0">Mes Medicaments</h3>
+              <h3 class="mb-0"><i class="fas fa-hand-holding-heart"></i> Mes Medicaments</h3>
             </div>
-            <div class="col text-right">
-              <a href="#!" class="btn btn-sm btn-primary">See all</a>
-            </div>
+            
           </div>
         </div>
         <div class="table-responsive">
@@ -182,14 +207,15 @@
             </tbody>
           </table>
         </div>
-      </div>
+        
+      </div><hr>
     </div>
     <div class="col-xl-4">
       <div class="card shadow">
         <div class="card-header border-0">
           <div class="row align-items-center">
             <div class="col">
-              <h3 class="mb-0">Mes Rendez-Vous</h3>
+              <h3 class="mb-0"><i class="far fa-calendar-check"></i> Rendez-Vous</h3>
             </div>
             <div class="col text-right">
             </div>
@@ -206,102 +232,105 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr *ngFor="let rdv of rdv$ | async">
                 <th scope="row">
-                  Facebook
+                  {{ rdv.title }}
                 </th>
                 <td>
-                  1,480
+                  {{ rdv.date|date:'mediumDate'}}
                 </td>
-                <td>
-                  <div class="d-flex align-items-center">
-                    <span class="mr-2">60%</span>
-                    <div>
-                      <div class="progress">
-                        <div class="progress-bar bg-gradient-danger" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
-                      </div>
-                    </div>
-                  </div>
-                </td>
+               
+                 
+                   
               </tr>
-              <tr>
-                <th scope="row">
-                  Facebook
-                </th>
-                <td>
-                  5,480
-                </td>
-                <td>
-                  <div class="d-flex align-items-center">
-                    <span class="mr-2">70%</span>
-                    <div>
-                      <div class="progress">
-                        <div class="progress-bar bg-gradient-success" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%;"></div>
-                      </div>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">
-                  Google
-                </th>
-                <td>
-                  4,807
-                </td>
-                <td>
-                  <div class="d-flex align-items-center">
-                    <span class="mr-2">80%</span>
-                    <div>
-                      <div class="progress">
-                        <div class="progress-bar bg-gradient-primary" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;"></div>
-                      </div>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">
-                  Instagram
-                </th>
-                <td>
-                  3,678
-                </td>
-                <td>
-                  <div class="d-flex align-items-center">
-                    <span class="mr-2">75%</span>
-                    <div>
-                      <div class="progress">
-                        <div class="progress-bar bg-gradient-info" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%;"></div>
-                      </div>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">
-                  twitter
-                </th>
-                <td>
-                  2,645
-                </td>
-                <td>
-                  <div class="d-flex align-items-center">
-                    <span class="mr-2">30%</span>
-                    <div>
-                      <div class="progress">
-                        <div class="progress-bar bg-gradient-warning" role="progressbar" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width: 30%;"></div>
-                      </div>
-                    </div>
-                  </div>
-                </td>
-              </tr>
+             
+            
+              
             </tbody>
           </table>
         </div>
       </div>
     </div>
+   
+    
   </div>
+ 
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h3 >Alimentation</h3>
+        <div class="col text-right">
+          
+        </div>
+    </div>
+    <div class="card-body">
+        <img src="/assets/img/cooking.png" width="50px" height="150px" style="float: left;width: auto;" />
+        <div class="row" style="width: 80%;float: right;;">
+            <div class="col">
+              <div class="card shadow">
+                <div class="card-header border-0">
+                  <h3 class="mb-0">Liste des aliments</h3>
+                  
+                </div>
+                
+                <div class="table-responsive">
+                  <table class="table align-items-center table-flush">
+                    <thead class="thead-light">
+                      <tr>
+                        <th scope="col">Date debut</th>
+                        <th scope="col">Date fin</th>
+                        <th scope="col">Heure</th>
+                        <th scope="col">Aliemnt</th>
+                        <th scope="col">Quantité</th>
+                      
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let aliment of alimentation$ | async">
+                        
+                        <td>
+                          {{ aliment.deb|date:'mediumDate' }}
+                        </td>
+                        <td>
+                          <span class="badge badge-dot mr-4">
+                              {{ aliment.fin|date:'mediumDate' }}
+                          </span>
+                        </td>
+                        <td>
+                          {{ aliment.heure }}
+                        </td>
+                        <td>
+                          {{ aliment.aliment }}
+                        </td>
+                        <td>
+                          {{ aliment.qte }}
+                        </td>
+                        <td class="text-right">
+                          <div ngbDropdown placement="bottom-right">
+                            <a class="btn btn-sm btn-icon-only text-light"  ngbDropdownToggle>
+                              <i class="fas fa-ellipsis-v"></i>
+                            </a>
+                            <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
+                              <a class="dropdown-item"  (click)="deletealiment(aliment.id)">Supprimer</a>
+                             
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      
+                      
+                     
+                    </tbody>
+                  </table>
+                </div>
+               
+              </div>
+            </div>
+          </div>
+    </div>
+</div>
+    
+  
 </div>
 <div class="container-fluid">
   <app-footer></app-footer>

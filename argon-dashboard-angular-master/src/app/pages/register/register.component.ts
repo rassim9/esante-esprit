@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/services/auth.service';
 
 import { first } from "rxjs/operators";
 
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -31,6 +32,7 @@ export class RegisterComponent implements OnInit {
       tel: new FormControl("",Validators.required ),
       sexe: new FormControl("", ),
       adresse: new FormControl("",Validators.required ),
+      
     });
   }
   signup(): void {
@@ -48,11 +50,13 @@ createFormGroupm(): FormGroup {
     
     tel: new FormControl("",Validators.required ),
     sexe: new FormControl("", ),
-
+    profession: new FormControl("", ),
+    
   });
 }
 signupm(): void {
 
-this.authService.signupm(this.signupmForm.value).subscribe((msg) => console.log(msg));  }
+this.authService.signupm(this.signupmForm.value).subscribe((msg) => console.log(msg)); 
+ }
 
 }

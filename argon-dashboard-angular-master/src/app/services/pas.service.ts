@@ -18,6 +18,8 @@ export class PasService {
 
   private url = "http://localhost:3000/pas"
   
+
+  
   httpOptions: {headers: HttpHeaders} = {
     headers:new HttpHeaders({"content-Type": "application/json"}),
   };
@@ -63,5 +65,13 @@ export class PasService {
     catchError(this.errorHandlerService.handleError<Heartbpm[]>("fetchAll", []))
     );
   }
-
+  fetchmycalories():Observable<Calories[]> {
+    const email =localStorage.getItem('email');
+    const url = `http://localhost:3000/calories/${email}`;
+    return this.http
+    .get<Calories[]>(url, { responseType: "json"})
+    .pipe(tap((_) => console.log("fetched calories")),
+    catchError(this.errorHandlerService.handleError<Calories[]>("fetchAll", []))
+    );
+  }
 }
